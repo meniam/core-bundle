@@ -28,6 +28,7 @@ trait ConnectionTrait
     private $connectionTraitEm;
 
     /**
+     * @required
      * @param EntityManagerInterface $em
      */
     public function setConnectionTraitEm(EntityManagerInterface $em)
