@@ -1,0 +1,15 @@
+diff:
+    ago:
+        second: '%count% секунду назад|%count% секунды назад|%count% секунд назад'
+        minute: '%count% минуту назад|%count% минуты назад|%count% минут назад'
+        hour: '%count% час назад|%count% часа назад|%count% часов назад'
+        day: '%count% день назад|%count% дня назад|%count% дней назад'
+        month: '%count% месяц назад|%count% дня назад|%count% дней назад'
+        year: '%count% год назад|%count% года назад|%count% лет назад'
+    in:
+        second: 'через %count% секунду|через %count% секунды|через %count% секунд'
+        minute: 'через %count% минуту|через %count% минуты|через %count% минут'
+        hour: 'через %count% час|через %count% часа|через %count% часов'
+        day: 'через %count% день|через %count% дня|через %count% дней'
+        month: 'через %count% месяц|через %count% дня|через %count% дней'
+        year: 'через %count% год|через %count% года|через %count% лет'

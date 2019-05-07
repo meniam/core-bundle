@@ -1,0 +1,42 @@
+{
+    "name": "meniam/core-bundle",
+    "type": "core-bundle",
+    "description": "Meniam CoreBundle",
+    "keywords": [],
+    "homepage": "http://meniam.ru",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eugene Myazin",
+            "email": "meniam@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-xml": "*",
+        "ext-mbstring": "*",
+        "ext-curl": "*",
+        "ext-memcached": "*",
+        "ext-pdo": "*",
+        "symfony/framework-bundle": "~4.2",
+        "symfony/security": "~4.2",
+        "symfony/templating": "^4.2",
+        "symfony/translation": "^4.2",
+        "symfony/validator": "^4.2",
+        "symfony/asset": "^4.2",
+        "doctrine/doctrine-bundle": "^1.10",
+        "doctrine/orm": "^2.6",
+        "cocur/slugify": "@stable",
+        "meniam/autotext": "^4.0",
+        "white-october/pagerfanta-bundle": "^1.2",
+        "guzzlehttp/guzzle": "~5.3.1|~6.0",
+        "guzzlehttp/psr7": "^1.4",
+        "league/commonmark": "^0.19.1",
+        "league/commonmark-extras": "^0.4.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": { "Meniam\\Bundle\\CoreBundle\\": "" }
+    }
+}
