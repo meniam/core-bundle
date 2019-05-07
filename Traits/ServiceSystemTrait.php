@@ -2,9 +2,10 @@
 
 namespace Meniam\Bundle\CoreBundle\Traits;
 
+use \LogicException;
+use Meniam\Bundle\CoreBundle\Service\FileStorageService;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\Pager;
-use \LogicException;
 use Meniam\AutotextBundle\Autotext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +54,14 @@ trait ServiceSystemTrait
     protected function getPageMeta()
     {
         return $this->getService(PageMeta::class);
+    }
+
+    /**
+     * @return FileStorageService
+     */
+    public function getFileStorageService()
+    {
+        return $this->getService(FileStorageService::class);
     }
 
     /**
