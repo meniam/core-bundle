@@ -9,8 +9,6 @@ services:
     public: false
 
     bind:
-#      $logger: '@logger'
-#      $pager: '@Meniam\Bundle\CoreBundle\Service\Pager'
       $storageDir: "%storage_directory%"
       $env: '%kernel.environment%'
 

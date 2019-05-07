@@ -32,7 +32,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-abstract class AbstractService implements ServiceSubscriberInterface
+abstract class AbstractCoreService implements ServiceSubscriberInterface
 {
     use CacheTrait;
     use StringTrait;

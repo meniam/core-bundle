@@ -6,7 +6,7 @@ use \Exception;
 use \Memcached;
 use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 
-class MemcacheService extends AbstractService
+class MemcacheService extends AbstractCoreService
 {
     const MC_DEFAULT = '-1~1982~06~01';
 
