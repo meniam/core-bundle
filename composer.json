@@ -24,6 +24,8 @@
         "symfony/translation": "^4.2",
         "symfony/validator": "^4.2",
         "symfony/asset": "^4.2",
+        "symfony/process": "^4.2",
+        "symfony/form": "^4.2",
         "doctrine/doctrine-bundle": "^1.10",
         "doctrine/orm": "^2.6",
         "cocur/slugify": "@stable",
