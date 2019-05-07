@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Meniam\Bundle\CoreBundle\Traits;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

@@ -2,7 +2,7 @@
 
 namespace Meniam\Bundle\CoreBundle\Service;
 
-use App\Traits\PagerTrait;
+use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Symfony\Component\Routing\Router;
 
 class Pager extends AbstractService

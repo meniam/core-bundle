@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Meniam\Bundle\CoreBundle\Traits;
 
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Service\PageCache;

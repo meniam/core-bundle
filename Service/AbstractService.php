@@ -2,16 +2,16 @@
 
 namespace Meniam\Bundle\CoreBundle\Service;
 
-use App\Traits\ServiceSystemTrait;
+use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use \LogicException;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearch;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearchId;
-use App\Traits\CacheTrait;
-use App\Traits\ConnectionTrait;
-use App\Traits\PagerTrait;
-use App\Traits\StringTrait;
-use App\Traits\ValidatorTrait;
+use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
+use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
+use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
+use Meniam\Bundle\CoreBundle\Traits\StringTrait;
+use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;

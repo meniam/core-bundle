@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Meniam\Bundle\CoreBundle\Traits;
 
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\Pager;

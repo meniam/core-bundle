@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Meniam\Bundle\CoreBundle\Traits;
 
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
