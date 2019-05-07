@@ -4,7 +4,6 @@ namespace Meniam\Bundle\CoreBundle\Traits;
 
 use \PDO;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\DBALException;
@@ -70,11 +69,19 @@ trait ConnectionTrait
     }
 
     /**
-     * @return Connection
+     * @return Connection|object
      */
     public function getConn()
     {
         return $this->getEm()->getConnection();
+    }
+
+    /**
+     * @return Connection|object
+     */
+    public function getConnSlave()
+    {
+        return $this->getDoctrine()->getConnection('slave');
     }
 
     /**
@@ -119,11 +126,13 @@ trait ConnectionTrait
      * @param string $sql    The SQL query.
      * @param array  $params The query parameters.
      * @param array  $types  The query parameter types.
-     * @return array
+     * @param bool   $isSlave
+     * @return array|false
      */
-    public function fetchAll($sql, array $params = [], $types = [])
+    public function fetchAll($sql, array $params = [], $types = [], $isSlave = false)
     {
-        return $this->executeQuery($sql, $params, $types)->fetchAll();
+        $query = $this->executeQuery($sql, $params, $types, $isSlave);
+        return $query ? $query->fetchAll() : false;
     }
 
     /**
@@ -133,11 +142,13 @@ trait ConnectionTrait
      * @param string $statement The SQL query.
      * @param array  $params    The query parameters.
      * @param array  $types     The query parameter types.
+     * @param bool   $isSlave
      * @return array|bool False is returned if no rows are found.
      */
-    public function fetchAssoc($statement, array $params = [], array $types = [])
+    public function fetchAssoc($statement, array $params = [], array $types = [], $isSlave = false)
     {
-        return $this->executeQuery($statement, $params, $types)->fetch(FetchMode::ASSOCIATIVE);
+        $query = $this->executeQuery($statement, $params, $types, $isSlave);
+        return $query ? $query->fetch(FetchMode::ASSOCIATIVE) : false;
     }
 
     /**
@@ -148,57 +159,30 @@ trait ConnectionTrait
      * @param array  $params    The prepared statement params.
      * @param int    $column    The 0-indexed column number to retrieve.
      * @param array  $types     The query parameter types.
+     * @param bool   $isSlave
      * @return mixed|bool False is returned if no rows are found.
      */
-    public function fetchColumn($statement, array $params = [], $column = 0, array $types = [])
+    public function fetchColumn($statement, array $params = [], $column = 0, array $types = [], $isSlave = false)
     {
-        return $this->executeQuery($statement, $params, $types)->fetchColumn($column);
+        $query = $this->executeQuery($statement, $params, $types, $isSlave);
+        return $query ? $query->fetchColumn($column) : false;
     }
 
-    public function prepareMultipleValues($data, $includeFields = [], $excludeFields = [], $cast = [])
+    /**
+     * Executes an, optionally parametrized, SQL query.
+     * If the query is parametrized, a prepared statement is used.
+     * If an SQLLogger is configured, the execution is logged.
+     *
+     * @param string $query  The SQL query to execute.
+     * @param array  $params The parameters to bind to the query, if any.
+     * @param array  $types  The types the previous parameters are in.
+     * @param bool   $isSlave
+     * @return array|Statement|false The executed statement.
+     */
+    public function fetchPairs($query, array $params = [], $types = [], $isSlave = false)
     {
-        $sql = '';
-        $params = [];
-        $i = 0;
-        $conn = $this->getConn();
-        foreach ($data as $item) {
-            $sqlValue = '';
-            if (!empty($includeFields)) {
-                uksort(
-                    $item,
-                    function ($a, $b) use ($includeFields) {
-                        return array_search($a, $includeFields) <=> array_search($b, $includeFields);
-                    }
-                );
-            }
-
-            foreach ($item as $key => $value) {
-                $isFieldIncluded = (!empty($includeFields) && in_array($key, $includeFields)) || empty($includeFields);
-                $isFieldExcluded = (!empty($excludeFields) && in_array($key, $excludeFields));
-
-                if ($isFieldIncluded && !$isFieldExcluded) {
-                    $castType = isset($cast[$key]) ? $cast[$key] : '';
-                    if (is_bool($value)) {
-                        $value = $value ? 'TRUE' : 'FALSE';
-                    }
-                    $castTypeStr = $i ? '' : $castType;
-                    if ($castType) {
-                        $sqlValue .= ",{$castTypeStr} ".$conn->quote($value, PDO::PARAM_STR);
-                    } else {
-                        $sqlValue .= ", :{$key}__{$i}";
-                        $params["{$key}__{$i}"] = $value;
-                    }
-                }
-            }
-
-            $sqlValue = ltrim($sqlValue, ', ');
-            $sql .= ",\n({$sqlValue})";
-            $i++;
-        }
-
-        $sql = ltrim($sql, ', ');
-
-        return [$sql, $params];
+        $query = $this->executeQuery($query, $params, $types, $isSlave);
+        return $query ? $query->fetchAll(PDO::FETCH_KEY_PAIR) : false;
     }
 
     /**
@@ -209,43 +193,21 @@ trait ConnectionTrait
      * @param string                 $query  The SQL query to execute.
      * @param array                  $params The parameters to bind to the query, if any.
      * @param array                  $types  The types the previous parameters are in.
-     * @param QueryCacheProfile|null $qcp    The query cache profile, optional.
+     * @param bool                   $isSlave    The query cache profile, optional.
      * @return Statement|false The executed statement.
      */
-    public function executeQuery($query, array $params = [], $types = [], QueryCacheProfile $qcp = null)
+    public function executeQuery($query, array $params = [], $types = [], $isSlave = false)
     {
         $result = false;
         try {
-            $result = $this->getConn()->executeQuery($query, $params, $types, $qcp);
+            $conn = $isSlave ? $this->getConnSlave() : $this->getConn();
+            $result = $conn->executeQuery($query, $params, $types);
         } catch (DBALException $e) {
             $message = $e->getMessage();
             $message = preg_replace('#VALUES(.*?)ON#usi', '{{VALUES}}', $message);
             $message = preg_replace('#with params\s*\[.*?\]#usi', 'with params [{{PARAMS}}]', $message);
 
             $this->getLogger()->error('SQL Execute Error', [$message, 'sql' => $query, 'params' => $params, 'types' => $types]);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Executes an, optionally parametrized, SQL query.
-     * If the query is parametrized, a prepared statement is used.
-     * If an SQLLogger is configured, the execution is logged.
-     *
-     * @param string                 $query  The SQL query to execute.
-     * @param array                  $params The parameters to bind to the query, if any.
-     * @param array                  $types  The types the previous parameters are in.
-     * @param QueryCacheProfile|null $qcp    The query cache profile, optional.
-     * @return array|Statement|false The executed statement.
-     */
-    public function fetchPairs($query, array $params = [], $types = [], QueryCacheProfile $qcp = null)
-    {
-        $result = false;
-        try {
-            $result = $this->getConn()->executeQuery($query, $params, $types, $qcp)->fetchAll(PDO::FETCH_KEY_PAIR);
-        } catch (DBALException $e) {
-            $this->getLogger()->error('SQL Execute Error', ['sql' => $query, 'params' => $params, 'types' => $types, 'e' => $e->getMessage()]);
         }
 
         return $result;
@@ -292,5 +254,58 @@ trait ConnectionTrait
         }
 
         return $result;
+    }
+
+    /**
+     * @param       $data
+     * @param array $includeFields
+     * @param array $excludeFields
+     * @param array $cast
+     * @return array
+     */
+    public function prepareMultipleValues($data, $includeFields = [], $excludeFields = [], $cast = [])
+    {
+        $sql = '';
+        $params = [];
+        $i = 0;
+        $conn = $this->getConn();
+        foreach ($data as $item) {
+            $sqlValue = '';
+            if (!empty($includeFields)) {
+                uksort(
+                    $item,
+                    function ($a, $b) use ($includeFields) {
+                        return array_search($a, $includeFields) <=> array_search($b, $includeFields);
+                    }
+                );
+            }
+
+            foreach ($item as $key => $value) {
+                $isFieldIncluded = (!empty($includeFields) && in_array($key, $includeFields)) || empty($includeFields);
+                $isFieldExcluded = (!empty($excludeFields) && in_array($key, $excludeFields));
+
+                if ($isFieldIncluded && !$isFieldExcluded) {
+                    $castType = isset($cast[$key]) ? $cast[$key] : '';
+                    if (is_bool($value)) {
+                        $value = $value ? 'TRUE' : 'FALSE';
+                    }
+                    $castTypeStr = $i ? '' : $castType;
+                    if ($castType) {
+                        $sqlValue .= ",{$castTypeStr} ".$conn->quote($value, PDO::PARAM_STR);
+                    } else {
+                        $sqlValue .= ", :{$key}__{$i}";
+                        $params["{$key}__{$i}"] = $value;
+                    }
+                }
+            }
+
+            $sqlValue = ltrim($sqlValue, ', ');
+            $sql .= ",\n({$sqlValue})";
+            $i++;
+        }
+
+        $sql = ltrim($sql, ', ');
+
+        return [$sql, $params];
     }
 }
