@@ -1,6 +1,6 @@
 <?php
 
-namespace Meniam\Bundle\CoreBundleDependencyInjection;
+namespace Meniam\Bundle\CoreBundle\DependencyInjection;
 
 use \Exception;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
