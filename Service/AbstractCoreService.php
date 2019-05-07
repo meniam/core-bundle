@@ -3,7 +3,6 @@
 namespace Meniam\Bundle\CoreBundle\Service;
 
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
-use \LogicException;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearch;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearchId;
@@ -12,12 +11,10 @@ use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -77,30 +74,6 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
     }
 
     /**
-     * Shortcut to return the Doctrine Registry service.
-     *
-     * @throws LogicException If DoctrineBundle is not available
-     *
-     * @final
-     */
-    protected function getDoctrine(): ManagerRegistry
-    {
-        if (!$this->container->has('doctrine')) {
-            throw new LogicException('The DoctrineBundle is not registered in your application. Try running "composer require symfony/orm-pack".');
-        }
-
-        return $this->container->get('doctrine');
-    }
-
-    /**
-     * @return EntityManager|object
-     */
-    protected function getEm()
-    {
-        return $this->getDoctrine()->getManager();
-    }
-
-    /**
      * Generates a URL from the given parameters.
      *
      * @param string      $route         The name of the route
@@ -114,16 +87,6 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
     public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->container->get('router')->generate($route, $parameters, $referenceType);
-    }
-
-    /**
-     * Shortcut to return the request service.
-     *
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->container->get('request_stack')->getCurrentRequest();
     }
 
     /**

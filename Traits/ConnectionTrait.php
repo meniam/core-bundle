@@ -3,6 +3,7 @@
 namespace Meniam\Bundle\CoreBundle\Traits;
 
 use \PDO;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException;
@@ -49,6 +50,22 @@ trait ConnectionTrait
 
         $this->connectionTraitEm = $this->container->get(EntityManagerInterface::class);
         return $this->connectionTraitEm;
+    }
+
+    /**
+     * Shortcut to return the Doctrine Registry service.
+     *
+     * @throws LogicException If DoctrineBundle is not available
+     *
+     * @final
+     */
+    protected function getDoctrine(): ManagerRegistry
+    {
+        if (!$this->container->has('doctrine')) {
+            throw new LogicException('The DoctrineBundle is not registered in your application. Try running "composer require symfony/orm-pack".');
+        }
+
+        return $this->container->get('doctrine');
     }
 
     /**
