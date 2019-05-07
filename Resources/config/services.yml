@@ -2,4 +2,10 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
+    public: false
+
+  Meniam\Bundle\CoreBundle\Servce\:
+    resource: '../../Service/**/*.php'
+    exclude:
+      - '../../Service/{AbstractService.php}'
     public: true
