@@ -10,6 +10,7 @@ use Meniam\AutotextBundle\Autotext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\Environment;
 
 /**
  * @property ContainerInterface $container
@@ -30,6 +31,14 @@ trait ServiceSystemTrait
 
         $requestStack = $this->container->get('request_stack');
         return $requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @return mixed|object|Environment
+     */
+    protected function getTwig()
+    {
+        return $this->getService('twig');
     }
 
     /**
