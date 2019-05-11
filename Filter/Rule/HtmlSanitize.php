@@ -22,7 +22,7 @@ class HtmlSanitize extends FilterRule
     {
         if (!$this->sanitizer) {
             $this->sanitizer = Sanitizer::create([
-                'extensions' => ['basic', 'image'],
+                'extensions' => ['basic', 'list', 'image', 'code', 'table', 'extra'],
                 'tags' => [
                     'a' => [
                         'allowed_hosts' => null,
@@ -33,6 +33,12 @@ class HtmlSanitize extends FilterRule
                     ],
                     'br' => [
                         'allowed_attributes' => [],
+                    ],
+                    'figcaption' => [
+                        'allowed_attributes' => ['class', 'title'],
+                    ],
+                    'figure' => [
+                        'allowed_attributes' => ['class', 'title'],
                     ],
                     'code' => [
                         'allowed_attributes' => ['class'],

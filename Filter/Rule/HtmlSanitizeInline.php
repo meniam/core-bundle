@@ -22,6 +22,7 @@ class HtmlSanitizeInline extends FilterRule
     {
         if (!$this->sanitizer) {
             $this->sanitizer = Sanitizer::create([
+                'extensions' => ['basic'],
                 'tags' => [
                     'em' => [
                         'allowed_attributes' => ['class', 'title'],
