@@ -5,16 +5,15 @@ namespace Meniam\Bundle\CoreBundle\Filter\Rule;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Ext\InlinesOnly\InlinesOnlyExtension;
-use Meniam\Bundle\CoreBundle\Filter\FilterRule;
 
-class MarkdownInline extends FilterRule
+class MarkdownInline extends HtmlSanitizeInline
 {
     /** @var CommonMarkConverter */
     private $markdownParser;
 
     public function filter($value)
     {
-        return $this->getMarkdownParser()->convertToHtml($value);
+        return parent::filter($this->getMarkdownParser()->convertToHtml($value));
     }
 
     /**

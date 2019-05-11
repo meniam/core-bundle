@@ -3,16 +3,15 @@
 namespace Meniam\Bundle\CoreBundle\Filter\Rule;
 
 use League\CommonMark\CommonMarkConverter;
-use Meniam\Bundle\CoreBundle\Filter\FilterRule;
 
-class MarkdownWithHtml extends FilterRule
+class MarkdownWithHtml extends HtmlSanitize
 {
     /** @var CommonMarkConverter */
     private $markdownParser;
 
     public function filter($value)
     {
-        return $this->getMarkdownParser()->convertToHtml($value);
+        return parent::filter($this->getMarkdownParser()->convertToHtml($value));
     }
 
     /**
