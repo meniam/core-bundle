@@ -7,9 +7,11 @@ use Meniam\Bundle\CoreBundle\Service\FileStorageService;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\Pager;
 use Meniam\AutotextBundle\Autotext;
+use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Router;
 use Twig\Environment;
 
 /**
@@ -25,12 +27,16 @@ trait ServiceSystemTrait
     protected function getRequest()
     {
         /** @var RequestStack $requestStack */
-        if (!$this->container->has('request_stack')) {
-            throw new LogicException('The request_stack is not registered in your application.');
-        }
-
-        $requestStack = $this->container->get('request_stack');
+        $requestStack = $this->getService('request_stack');
         return $requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @return Router
+     */
+    protected function getRouter()
+    {
+        return $this->getService('router');
     }
 
     /**
@@ -71,6 +77,14 @@ trait ServiceSystemTrait
     public function getFileStorageService()
     {
         return $this->getService(FileStorageService::class);
+    }
+
+    /**
+     * @return RequestService
+     */
+    public function getRequestService()
+    {
+        return $this->getService(RequestService::class);
     }
 
     /**

@@ -73,6 +73,12 @@ services:
     tags:
       - { name: twig.extension }
 
+  Meniam\Bundle\CoreBundle\Twig\Extension\UrlExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\UrlExtension
+    arguments: [ "@service_container" ]
+    tags:
+      - { name: twig.extension }
+
   Meniam\Bundle\CoreBundle\Twig\Extension\StupidExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\StupidExtension
     tags:
