@@ -18,6 +18,11 @@ services:
       - '../../Service/{AbstractService.php}'
     public: true
 
-  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
-    class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
+  Meniam\Bundle\CoreBundle\Twig\Extension\:
+    resource: '../../Twig/Extension/**/*.php'
     tags: { name: twig.extension }
+    public: true
+
+#  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
+#    class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
+#    tags: { name: twig.extension }
