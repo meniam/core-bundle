@@ -15,6 +15,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         return [
             new TwigFilter('date_html_format', [$this, 'dateHtmlFormatFilter'], ['is_safe' => ['all']]),
             new TwigFilter('date_html_pretty', [$this, 'dateHtmlPrettyFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('diff_pretty_time', [$this, 'diffPrettyTimeFilter']),
         ];
     }
 
@@ -41,7 +42,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
     }
 
-    public function dateHtmlPrettyFilter($date, $format = 'd.m.Y H:i', $withTimeTag = false)
+    public function dateHtmlPrettyFilter($date, $withTimeTag = false)
     {
         $oldLocal = setlocale(LC_TIME, 'en', 'en_EN', 'en_EN.UTF-8');
 
@@ -53,22 +54,17 @@ class DateExtension extends AbstractServiceSubscriberExtension
             $date = strtotime($date);
         }
 
-        if ($format == 'd.m.Y H:i') {
-            if ((date('Y') != date('Y', $date))) { // Другой год
-                $result = date('j F Y, H:i', $date);
-            } elseif (date('Ymd') == date('Ymd', $date)) {
-                $result = 'Today, ' . date('H:i', $date);
-            } elseif (date('Ymd', time() - 86400) == date('Ymd', $date)) {
-                $result = 'Yesterday, ' . date('H:i', $date);
-            } else {
-                $result = date("j F, H:i", $date);
-            }
-
-            $result = str_replace(', 00:00', '', $result);
+        if ((date('Y') != date('Y', $date))) { // Другой год
+            $result = date('j F Y, H:i', $date);
+        } elseif (date('Ymd') == date('Ymd', $date)) {
+            $result = 'Today, ' . date('H:i', $date);
+        } elseif (date('Ymd', time() - 86400) == date('Ymd', $date)) {
+            $result = 'Yesterday, ' . date('H:i', $date);
         } else {
-            $result = date($format, $date);
+            $result = date("j F, H:i", $date);
         }
 
+        $result = str_replace(', 00:00', '', $result);
         $result = $this->dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
@@ -77,5 +73,40 @@ class DateExtension extends AbstractServiceSubscriberExtension
         } else {
             return $result;
         }
+    }
+
+    public function diffPrettyTimeFilter($date)
+    {
+        if (is_object($date) && is_a($date, 'DateTime')) {
+            /* @var $date DateTime */
+            $date = $date->getTimestamp();
+        } elseif (!is_numeric($date)) {
+            $date = strtotime($date);
+        }
+
+        $dateDiff = (new DateTime())->setTimestamp($date)->diff(new DateTime('now'));
+
+        $result = "";
+        if ($dateDiff->y != 0) {
+            $result .= $dateDiff->y.'г ';
+        }
+
+        if ($dateDiff->m != 0) {
+            $result .= $dateDiff->m.'м ';
+        }
+
+        if ($dateDiff->d != 0) {
+            $result .= $dateDiff->d.'д ';
+        }
+
+        if ($dateDiff->h != 0) {
+            $result .= $dateDiff->h.'ч ';
+        }
+
+        if ($dateDiff->i != 0) {
+            $result .= $dateDiff->i.'м ';
+        }
+
+        return trim($result);
     }
 }

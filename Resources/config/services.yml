@@ -60,13 +60,47 @@ services:
       - '../../Service/{AbstractService.php}'
     public: true
 
-  Meniam\Bundle\CoreBundle\Twig\Extension\:
-    resource: '../../Twig/Extension/**/*.php'
-    exclude: '../../Twig/Extension/**/Abstract*.php'
+#  Meniam\Bundle\CoreBundle\Twig\Extension\:
+#    resource: '../../Twig/Extension/**/*.php'
+#    exclude: '../../Twig/Extension/**/Abstract*.php'
+#    tags:
+#      - { name: twig.extension }
+#    public: true
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
+    arguments: [ "@container" ]
+    tags:
+      - { name: twig.extension }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\StupidExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\StupidExtension
+    tags:
+      - { name: twig.extension }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\Form\BootstrapExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\BootstrapExtension
+    tags:
+      - { name: twig.extension }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\Form\IconExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\IconExtension
+    tags:
+      - { name: twig.extension }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabButtonExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabButtonExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\PageMetaExtension:
+    class:     Meniam\Bundle\CoreBundle\Twig\Extension\PageMetaExtension
+    arguments: [ '@Meniam\Bundle\CoreBundle\Service\PageMeta']
     tags:
       - { name: twig.extension }
     public: true
-
-#  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
-#    class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
-#    tags: { name: twig.extension }
