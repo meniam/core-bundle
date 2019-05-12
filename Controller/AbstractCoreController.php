@@ -9,6 +9,7 @@ use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Service\PageCache;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\Pager;
+use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
@@ -34,6 +35,7 @@ abstract class AbstractCoreController extends AbstractController
     public static function getSubscribedServices()
     {
         return array_merge(parent::getSubscribedServices(), [
+            RequestService::class,
             MemcacheService::class,
             LoggerInterface::class,
             LoggerService::class,
