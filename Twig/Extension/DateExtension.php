@@ -13,8 +13,8 @@ class DateExtension extends AbstractServiceSubscriberExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('date_html_format', [$this, 'dateHtmlFormatFilter']),
-            new TwigFilter('date_html_pretty', [$this, 'dateHtmlPrettyFilter']),
+            new TwigFilter('date_html_format', [$this, 'dateHtmlFormatFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('date_html_pretty', [$this, 'dateHtmlPrettyFilter'], ['is_safe' => ['all']]),
         ];
     }
 
