@@ -1,6 +1,6 @@
 <?php
 
-namespace Meniam\Bundle\CoreBundle\Twig\Extension;
+namespace Meniam\Bundle\CoreBundle\Twig\Extension\Form;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
