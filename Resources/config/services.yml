@@ -20,6 +20,7 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\:
     resource: '../../Twig/Extension/**/*.php'
+    exclude: '../../Twig/Extension/**/Abstract*.php'
     tags:
       - { name: twig.extension }
     public: true
