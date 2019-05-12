@@ -1,3 +1,7 @@
+#twig:
+#  form_themes:
+#    - '@CoreBundle/form/type/markdown.html.twig'
+
 parameters:
   storage_directory: "%kernel.project_dir%/var/storage"
   public_directory: "%kernel.project_dir%/public"
