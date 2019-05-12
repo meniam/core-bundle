@@ -45,6 +45,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
     {
         $oldLocal = setlocale(LC_TIME, 'en', 'en_EN', 'en_EN.UTF-8');
 
+
         if (is_object($date) && is_a($date, 'DateTime')) {
             /* @var $date DateTime */
             $date = $date->getTimestamp();
@@ -53,15 +54,17 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         if ($format == 'd.m.Y H:i') {
-            if ((date('Y') != date('Y', strtotime($date)))) { // Другой год
-                $result = date('d m Y, H:i', $date);
-            } elseif (date('Ymd') == date('Ymd', strtotime($date))) {
-                $result = date('Today, H:i', $date);
-            } elseif (date('Ymd', time() - 86400) == date('Ymd', strtotime($date))) {
-                $result = date('Yesterday, H:i', $date);
+            if ((date('Y') != date('Y', $date))) { // Другой год
+                $result = date('j F Y, H:i', $date);
+            } elseif (date('Ymd') == date('Ymd', $date)) {
+                $result = 'Today, ' . date('H:i', $date);
+            } elseif (date('Ymd', time() - 86400) == date('Ymd', $date)) {
+                $result = 'Yesterday, ' . date('H:i', $date);
             } else {
-                $result = date("d m, H:i", $date);
+                $result = date("j F, H:i", $date);
             }
+
+            $result = str_replace(', 00:00', '', $result);
         } else {
             $result = date($format, $date);
         }
