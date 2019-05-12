@@ -45,7 +45,6 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
         return [
             LoggerInterface::class,
             LoggerService::class,
-            Pager::class,
             MemcacheService::class,
             EntityManagerInterface::class,
             TranslatorInterface::class,

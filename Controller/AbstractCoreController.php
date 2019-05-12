@@ -8,7 +8,6 @@ use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Service\PageCache;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
-use Meniam\Bundle\CoreBundle\Service\Pager;
 use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
@@ -41,7 +40,6 @@ abstract class AbstractCoreController extends AbstractController
             LoggerInterface::class,
             LoggerService::class,
             EntityManagerInterface::class,
-            Pager::class,
             PageMeta::class,
             PageCache::class,
             Autotext::class,

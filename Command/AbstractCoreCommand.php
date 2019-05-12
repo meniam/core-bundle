@@ -6,7 +6,6 @@ use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Slug;
 use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
-use Meniam\Bundle\CoreBundle\Service\Pager;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\StringTrait;
@@ -49,7 +48,6 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
         return [
             LoggerInterface::class,
             LoggerService::class,
-            Pager::class,
             MemcacheService::class,
             EntityManagerInterface::class,
             'router' => '?'.RouterInterface::class,

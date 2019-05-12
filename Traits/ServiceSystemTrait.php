@@ -6,7 +6,6 @@ use \LogicException;
 use Meniam\Bundle\CoreBundle\Entity\User;
 use Meniam\Bundle\CoreBundle\Service\FileStorageService;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
-use Meniam\Bundle\CoreBundle\Service\Pager;
 use Meniam\AutotextBundle\Autotext;
 use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -82,14 +81,6 @@ trait ServiceSystemTrait
     protected function getAutotext()
     {
         return $this->getService(Autotext::class);
-    }
-
-    /**
-     * @return Pager|mixed
-     */
-    protected function getPager()
-    {
-        return $this->getService(Pager::class);
     }
 
     /**
