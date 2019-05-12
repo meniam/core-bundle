@@ -1,0 +1,125 @@
+{% block markdown_widget %}
+    {{ form_widget(form) }}
+    {{ page_meta_asset_add_javascript('/static/js/shared/markdown.js') }}
+    {{ page_meta_asset_add_style('/static/css/shared/markdown.css') }}
+    {% javascript %}
+        <script>
+            (function () {
+                var simplemde = new SimpleMDE({
+                    element: document.getElementById("{{ form.vars.id }}"),
+                    spellChecker: false,
+
+                    lineWrapping: false,
+                    autosave: {
+                        enabled: true,
+                        uniqueId: "{{ form.vars.id }}",
+                        delay: 300,
+                    },
+                    toolbar: [
+                        {
+                            name: "bold",
+                            action: SimpleMDE.toggleBold,
+                            className: "fal fa-bold",
+                            title: "Жирный",
+                        },
+                        {
+                            name: "italic",
+                            action: SimpleMDE.toggleItalic,
+                            className: "fal fa-italic",
+                            title: "Курсив",
+                        },
+                        {
+                            name: "heading-1",
+                            action: SimpleMDE.toggleHeading1,
+                            className: "fal fa-h1",
+                            title: "Заголовок 1",
+                        },
+                        {
+                            name: "heading-2",
+                            action: SimpleMDE.toggleHeading2,
+                            className: "fal fa-h2",
+                            title: "Заголовок 2",
+                        },
+                        {
+                            name: "heading-3",
+                            action: SimpleMDE.toggleHeading3,
+                            className: "fal fa-h3",
+                            title: "Заголовок 3",
+                        },
+                        {
+                            name: "horizontal-rule",
+                            action: SimpleMDE.drawHorizontalRule,
+                            className: "fal fa-ellipsis-h",
+                            title: "Горизонтальная линия",
+                        },
+                        "|",
+                        {
+                            name: "unordered-list",
+                            action: SimpleMDE.toggleUnorderedList,
+                            className: "fal fa-list-ul",
+                            title: "Ненумерованные список",
+                        },
+                        {
+                            name: "ordered-list",
+                            action: SimpleMDE.toggleOrderedList,
+                            className: "fal fa-list-ol",
+                            title: "Нумерованные список",
+                        },
+                        {
+                            name: "quote",
+                            action: SimpleMDE.toggleBlockquote,
+                            className: "fal fa-quote-left",
+                            title: "Циатата",
+                        },
+                        "|",
+
+                        {
+                            name: "code",
+                            action: SimpleMDE.toggleCodeBlock,
+                            className: "fal fa-code",
+                            title: "Код",
+                        },
+
+                        {
+                            name: "link",
+                            action: SimpleMDE.drawLink,
+                            className: "fal fa-link",
+                            title: "Ссылка",
+                        },
+
+                        {
+                            name: "image",
+                            action: SimpleMDE.drawImage,
+                            className: "fal fa-image",
+                            title: "Изображение",
+                        },
+
+                        "|",
+
+                        {
+                            name: "preview",
+                            action: SimpleMDE.togglePreview,
+                            className: "fal fa-eye",
+                            title: "Предпросмотр",
+                        },
+
+                        {
+                            name: "side-by-side",
+                            action: SimpleMDE.toggleSideBySide,
+                            className: "fal fa-columns no-disable no-mobile",
+                            title: "Предпросмотр с редактором",
+                        },
+
+                        {
+                            name: "fullscreen",
+                            action: SimpleMDE.toggleFullScreen,
+                            className: "fal fa-arrows-alt no-disable no-mobile",
+                            title: "Полный экран",
+                        },
+
+                    ]
+                });
+            })();
+        </script>
+    {% endjavascript %}
+{% endblock %}
