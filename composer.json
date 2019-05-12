@@ -20,7 +20,7 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "symfony/framework-bundle": "~4.2",
-        "symfony/security": "~4.2",
+        "symfony/security": "^4.2",
         "symfony/templating": "^4.2",
         "symfony/translation": "^4.2",
         "symfony/validator": "^4.2",

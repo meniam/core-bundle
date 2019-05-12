@@ -3,6 +3,7 @@
 namespace Meniam\Bundle\CoreBundle\Traits;
 
 use \LogicException;
+use Meniam\Bundle\CoreBundle\Entity\User;
 use Meniam\Bundle\CoreBundle\Service\FileStorageService;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\Pager;
@@ -12,6 +13,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 /**
@@ -22,6 +25,24 @@ trait ServiceSystemTrait
     use LoggerTrait;
 
     /**
+     * @return User|object|string
+     */
+    protected function getUser()
+    {
+        /** @var TokenInterface $token */
+        if (null === $token = $this->getTokenStorage()->getToken()) {
+            return null;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            // e.g. anonymous authentication
+            return null;
+        }
+
+        return $user;
+    }
+
+    /**
      * @return Request
      */
     protected function getRequest()
@@ -29,6 +50,14 @@ trait ServiceSystemTrait
         /** @var RequestStack $requestStack */
         $requestStack = $this->getService('request_stack');
         return $requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @return TokenStorage
+     */
+    protected function getTokenStorage()
+    {
+        return $this->getService('security.token_storage');
     }
 
     /**
