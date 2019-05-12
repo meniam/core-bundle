@@ -53,9 +53,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         if ($format == 'd.m.Y H:i') {
-            $isSameYear = (date('Y') == date('Y', strtotime($date)));
-
-            if (!$isSameYear) {
+            if ((date('Y') != date('Y', strtotime($date)))) { // Другой год
                 $result = date('d m Y, H:i', $date);
             } elseif (date('Ymd') == date('Ymd', strtotime($date))) {
                 $result = date('Today, H:i', $date);
