@@ -1,0 +1,3 @@
+twig:
+  form_themes:
+    - '@CoreBundle/form/type/markdown.html.twig'

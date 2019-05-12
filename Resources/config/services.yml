@@ -1,7 +1,3 @@
-#twig:
-#  form_themes:
-#    - '@CoreBundle/form/type/markdown.html.twig'
-
 parameters:
   storage_directory: "%kernel.project_dir%/var/storage"
   public_directory: "%kernel.project_dir%/public"
@@ -73,7 +69,7 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
-    arguments: [ "@container" ]
+    arguments: [ "@service_container" ]
     tags:
       - { name: twig.extension }
 
