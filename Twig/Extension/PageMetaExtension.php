@@ -24,6 +24,8 @@ class PageMetaExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
+            new TwigFunction('page_meta', array($this, 'getPageMeta'), ['is_safe' => ['all']]),
+
             new TwigFunction('page_meta_asset_add_style', array($this, 'assetAddStyle'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_asset_style_links', array($this, 'assetStyleLinks'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_asset_remove_style', array($this, 'assetRemoveStyle'), ['is_safe' => ['html']]),
@@ -120,5 +122,10 @@ class PageMetaExtension extends AbstractExtension
     {
         $group = 'styles_' . str_replace('styles_', '', $group);
         return implode("\n", $this->pageMeta->getFromStorage($group));
+    }
+
+    public function getPageMeta()
+    {
+        return $this->pageMeta;
     }
 }
