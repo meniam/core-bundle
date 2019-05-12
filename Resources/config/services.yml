@@ -20,7 +20,8 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\:
     resource: '../../Twig/Extension/**/*.php'
-    tags: { name: twig.extension }
+    tags:
+      - { name: twig.extension }
     public: true
 
 #  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:

@@ -4,29 +4,11 @@ namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
 use DateTime;
 use Meniam\Bundle\CoreBundle\Traits\DateTrait;
-use Psr\Container\ContainerInterface;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class DateExtension extends AbstractExtension implements ServiceSubscriberInterface
+class DateExtension extends AbstractServiceSubscriberExtension
 {
     use DateTrait;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    public static function getSubscribedServices()
-    {
-        return [];
-    }
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
 
     public function getFilters()
     {
