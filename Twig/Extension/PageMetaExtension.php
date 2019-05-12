@@ -23,7 +23,7 @@ class PageMetaExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('page_meta', array($this, 'getPageMeta'), ['is_safe' => ['all']]),
 
             new TwigFunction('page_meta_asset_add_style', array($this, 'assetAddStyle'), ['is_safe' => ['html']]),
@@ -37,7 +37,7 @@ class PageMetaExtension extends AbstractExtension
             new TwigFunction('page_meta_javascript_show', array($this, 'javascriptShow'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_style_show', array($this, 'stylesShow'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_get_from_storage', array($this, 'getFromStorage'), ['is_safe' => ['html']]),
-        );
+        ];
     }
 
     /**
