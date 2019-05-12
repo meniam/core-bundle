@@ -88,19 +88,21 @@ services:
     tags:
       - { name: twig.extension }
 
-  Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabExtension:
-    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabExtension
-    tags:
-      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
-  Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabButtonExtension:
-    class: Meniam\Bundle\CoreBundle\Twig\Extension\Form\TabButtonExtension
-    tags:
-      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
-
   Meniam\Bundle\CoreBundle\Twig\Extension\PageMetaExtension:
     class:     Meniam\Bundle\CoreBundle\Twig\Extension\PageMetaExtension
     arguments: [ '@Meniam\Bundle\CoreBundle\Service\PageMeta']
     tags:
       - { name: twig.extension }
     public: true
+
+
+  Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+  Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabButtonExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabButtonExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
+

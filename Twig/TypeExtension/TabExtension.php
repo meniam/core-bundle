@@ -1,6 +1,6 @@
 <?php
 
-namespace Meniam\Bundle\CoreBundle\Twig\Extension\Form;
+namespace Meniam\Bundle\CoreBundle\Twig\TypeExtension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
