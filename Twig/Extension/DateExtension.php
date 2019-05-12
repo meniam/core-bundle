@@ -15,7 +15,7 @@ class DateExtension extends AbstractExtension
         ];
     }
 
-    public function dateHtmlFormat($date, $format = 'd.m.Y H:i')
+    public function dateHtmlFormat($date, $format = 'd.m.Y H:i', $withTimeTag = false)
     {
         if (is_object($date) && is_a($date, 'DateTime')) {
             /* @var $date DateTime */
@@ -24,6 +24,12 @@ class DateExtension extends AbstractExtension
             $date = strtotime($date);
         }
 
-        return date($format, $date);
+        $result = date($format, $date);
+
+        if ($withTimeTag) {
+            return sprintf('<time datetime="%s">%s</time>', date('c', $date), $result);
+        } else {
+            return $result;
+        }
     }
 }
