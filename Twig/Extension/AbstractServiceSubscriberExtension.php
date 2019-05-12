@@ -24,7 +24,7 @@ abstract class AbstractServiceSubscriberExtension extends AbstractExtension impl
     /**
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     public static function getSubscribedServices()
     {
@@ -48,21 +48,4 @@ abstract class AbstractServiceSubscriberExtension extends AbstractExtension impl
     {
         $this->container = $container;
     }
-
-    /**
-     * Gets a container parameter by its name.
-     *
-     * @param string $name
-     * @return mixed
-     * @final
-     */
-    protected function getParameter(string $name)
-    {
-        if (!$this->container->has('parameter_bag')) {
-            throw new ServiceNotFoundException('parameter_bag', null, null, [], sprintf('The "%s::getParameter()" method is missing a parameter bag to work properly. Did you forget to register your controller as a service subscriber? This can be fixed either by using autoconfiguration or by manually wiring a "parameter_bag" in the service locator passed to the controller.', \get_class($this)));
-        }
-
-        return $this->container->get('parameter_bag')->get($name);
-    }
-
 }

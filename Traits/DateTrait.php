@@ -6,6 +6,7 @@ use \Exception;
 use \DateTime;
 use \DateTimeZone;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * @property ContainerInterface $container
@@ -21,24 +22,19 @@ trait DateTrait
         }
     }
 
-    public function getDateLocale($default = 'ru')
-    {
-        if (isset($this->container)) {
-            return $this->container->getParameter('locale');
-        } else {
-            return $default;
-        }
-    }
-
     public function dateReplace(string $date, $locale = null)
     {
         if (!$locale) {
-            $locale = $this->container->getParameter('locale');
+            if (!$this->container->has('parameter_bag')) {
+                throw new ServiceNotFoundException('parameter_bag', null, null, [], sprintf('The "%s::getParameter()" method is missing a parameter bag to work properly. Did you forget to register your controller as a service subscriber? This can be fixed either by using autoconfiguration or by manually wiring a "parameter_bag" in the service locator passed to the controller.', \get_class($this)));
+            }
+
+            $locale = $this->container->get('parameter_bag')->get('locale');
         }
 
-        $dateReplaces = $this->container->getParameter('date_replace');
+        $dateReplaces = $this->getParameter('date_replace');
         if (isset($dateReplaces[$locale])) {
-            $date = strtr($date, $dateReplaces);
+            $date = strtr($date, $dateReplaces[$locale]);
         }
 
         return $date;
