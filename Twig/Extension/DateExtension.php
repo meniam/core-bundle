@@ -52,7 +52,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
             $date = strtotime($date);
         }
 
-        if ($format == 'd m Y H:i') {
+        if ($format == 'd.m.Y H:i') {
             $isSameYear = (date('Y') == date('Y', strtotime($date)));
 
             if (!$isSameYear) {
