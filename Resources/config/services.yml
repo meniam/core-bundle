@@ -4,6 +4,8 @@ parameters:
 
   date_replace:
     ru:
+      Today: Сегодня
+      Yesterday: Вчера
       January: Января
       February: Февраля
       March: Марта

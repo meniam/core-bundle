@@ -32,7 +32,7 @@ trait DateTrait
             $locale = $this->container->get('parameter_bag')->get('locale');
         }
 
-        $dateReplaces = $this->getParameter('date_replace');
+        $dateReplaces = $this->container->get('parameter_bag')->get('date_replace');
         if (isset($dateReplaces[$locale])) {
             $date = strtr($date, $dateReplaces[$locale]);
         }

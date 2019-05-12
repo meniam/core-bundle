@@ -52,9 +52,23 @@ class DateExtension extends AbstractServiceSubscriberExtension
             $date = strtotime($date);
         }
 
-        $result = date($format, $date);
-        $result = $this->dateReplace($result);
+        if ($format == 'd m Y H:i') {
+            $isSameYear = (date('Y') == date('Y', strtotime($date)));
 
+            if (!$isSameYear) {
+                $result = date('d m Y, H:i', $date);
+            } elseif (date('Ymd') == date('Ymd', strtotime($date))) {
+                $result = date('Today, H:i', $date);
+            } elseif (date('Ymd', time() - 86400) == date('Ymd', strtotime($date))) {
+                $result = date('Yesterday, H:i', $date);
+            } else {
+                $result = date("d m, H:i", $date);
+            }
+        } else {
+            $result = date($format, $date);
+        }
+
+        $result = $this->dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {
