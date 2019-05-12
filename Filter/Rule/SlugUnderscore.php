@@ -4,7 +4,7 @@ namespace Meniam\Bundle\CoreBundle\Filter\Rule;
 
 use Cocur\Slugify\Slugify;
 
-class Slug extends Name
+class SlugUnderscore extends Name
 {
     /**
      * @var Slugify
@@ -13,7 +13,8 @@ class Slug extends Name
 
     public function filter($value)
     {
-        return $this->getSlugify()->slugify(parent::filter($value));
+        $value = parent::filter($value);
+        return trim($this->getSlugify()->slugify($value, ['separator' => '_']), '_');
     }
 
     /**
