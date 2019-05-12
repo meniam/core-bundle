@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig\Shared\PageMetaStorage;
+namespace Meniam\Bundle\CoreBundle\Twig\Node;
 
 use Twig\Compiler;
 use Twig\Node\Node;

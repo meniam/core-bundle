@@ -2,7 +2,7 @@
 
 namespace Meniam\Bundle\CoreBundle\Twig\TokenParser;
 
-use App\Twig\Shared\PageMetaStorage\PageMetaStorageNode;
+use Meniam\Bundle\CoreBundle\Twig\Node\PageMetaStorageNode;
 use Twig\Token;
 
 class PageMetaJavascriptTokenParser extends PageMetaStorageTokenParser
