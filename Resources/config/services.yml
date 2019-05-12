@@ -17,3 +17,7 @@ services:
     exclude:
       - '../../Service/{AbstractService.php}'
     public: true
+
+  Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
+    class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
+    tags: { name: twig.extension }
