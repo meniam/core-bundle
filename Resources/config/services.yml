@@ -44,10 +44,6 @@ parameters:
       Sat: Суб
       Sun: Вос
 
-twig:
-  form_themes:
-    - '@CoreBundle/form/type/markdown.html.twig'
-
 services:
   _defaults:
     autowire: true
