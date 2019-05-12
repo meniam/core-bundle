@@ -29,4 +29,18 @@ trait DateTrait
             return $default;
         }
     }
+
+    public function dateReplace(string $date, $locale = null)
+    {
+        if (!$locale) {
+            $locale = $this->container->getParameter('locale');
+        }
+
+        $dateReplaces = $this->container->getParameter('date_replace');
+        if (isset($dateReplaces[$locale])) {
+            $date = strtr($date, $dateReplaces);
+        }
+
+        return $date;
+    }
 }

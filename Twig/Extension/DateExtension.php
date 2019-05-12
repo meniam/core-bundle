@@ -19,8 +19,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
 
     public function dateHtmlFormat($date, $format = 'd.m.Y H:i', $withTimeTag = false)
     {
-        $locale = $this->getDateLocale();
-        $oldLocal = setlocale(LC_TIME, $locale);
+        $oldLocal = setlocale(LC_TIME, 'en', 'en_EN', 'en_EN.UTF-8');
 
         if (is_object($date) && is_a($date, 'DateTime')) {
             /* @var $date DateTime */
@@ -30,6 +29,8 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         $result = date($format, $date);
+        $result = $this->dateReplace($result);
+
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {
