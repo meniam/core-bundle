@@ -3,6 +3,8 @@
 namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Meniam\Bundle\CoreBundle\Service\DateService;
+use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
@@ -21,6 +23,8 @@ use Twig\Extension\AbstractExtension;
 
 abstract class AbstractServiceSubscriberExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
+    use ServiceSystemTrait;
+
     /**
      * @var ContainerInterface
      */
@@ -29,6 +33,7 @@ abstract class AbstractServiceSubscriberExtension extends AbstractExtension impl
     public static function getSubscribedServices()
     {
         return [
+            DateService::class,
             'router' => '?'.RouterInterface::class,
             'request_stack' => '?'.RequestStack::class,
             'http_kernel' => '?'.HttpKernelInterface::class,

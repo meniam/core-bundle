@@ -65,7 +65,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         $result = str_replace(', 00:00', '', $result);
-        $result = $this->dateReplace($result);
+        $result = $this->getDateService()->dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {
