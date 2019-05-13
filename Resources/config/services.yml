@@ -79,7 +79,7 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\UrlExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\UrlExtension
-    arguments: [ "@service_container" ]
+    arguments: [ '@Meniam\Bundle\CoreBundle\Service\PageMeta\RequestService' ]
     tags:
       - { name: twig.extension }
 
