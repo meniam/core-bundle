@@ -67,6 +67,10 @@ services:
 #      - { name: twig.extension }
 #    public: true
 
+  Meniam\Bundle\CoreBundle\Twig\Service\DateService:
+    class: Meniam\Bundle\CoreBundle\Twig\Service\DateService
+    arguments: [ "@service_container", "%date_replaces%" ]
+
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
     arguments: [ "%date_replaces%" ]
