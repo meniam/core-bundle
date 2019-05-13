@@ -57,15 +57,8 @@ services:
   Meniam\Bundle\CoreBundle\Service\:
     resource: '../../Service/**/*.php'
     exclude:
-      - '../../Service/{AbstractService.php}'
+      - '../../Service/{Abstract|Date}Service.php'
     public: true
-
-#  Meniam\Bundle\CoreBundle\Twig\Extension\:
-#    resource: '../../Twig/Extension/**/*.php'
-#    exclude: '../../Twig/Extension/**/Abstract*.php'
-#    tags:
-#      - { name: twig.extension }
-#    public: true
 
   Meniam\Bundle\CoreBundle\Twig\Service\DateService:
     class: Meniam\Bundle\CoreBundle\Twig\Service\DateService
@@ -104,7 +97,6 @@ services:
     tags:
       - { name: twig.extension }
     public: true
-
 
   Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabExtension:
     class: Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabExtension
