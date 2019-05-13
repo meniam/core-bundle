@@ -45,4 +45,12 @@ class InetType extends Type
     {
         return 'inet';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }

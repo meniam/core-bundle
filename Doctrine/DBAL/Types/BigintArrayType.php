@@ -55,4 +55,12 @@ class BigintArrayType extends Type
     {
         return 'bigint[]';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }

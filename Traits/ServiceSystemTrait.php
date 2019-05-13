@@ -26,7 +26,7 @@ trait ServiceSystemTrait
     /**
      * @return User|object|string
      */
-    protected function getUser()
+    protected function getLoggedUser()
     {
         /** @var TokenInterface $token */
         if (null === $token = $this->getTokenStorage()->getToken()) {

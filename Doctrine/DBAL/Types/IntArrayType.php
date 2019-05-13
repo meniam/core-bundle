@@ -55,4 +55,12 @@ class IntArrayType extends Type
     {
         return 'int[]';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }
