@@ -59,7 +59,7 @@ trait ConnectionTrait
      *
      * @final
      */
-    protected function getDoctrine(): ManagerRegistry
+    protected function getDoctrineManager(): ManagerRegistry
     {
         if (!$this->container->has('doctrine')) {
             throw new LogicException('The DoctrineBundle is not registered in your application. Try running "composer require symfony/orm-pack".');
@@ -81,7 +81,7 @@ trait ConnectionTrait
      */
     public function getConnSlave()
     {
-        return $this->getDoctrine()->getConnection('slave');
+        return $this->getDoctrineManager()->getConnection('slave');
     }
 
     /**
