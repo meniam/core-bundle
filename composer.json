@@ -17,6 +17,7 @@
         "ext-mbstring": "*",
         "ext-curl": "*",
         "ext-memcached": "*",
+        "ext-zlib": "*",
         "ext-json": "*",
         "ext-pdo": "*",
         "symfony/framework-bundle": "~4.2",

@@ -4,6 +4,7 @@ namespace Meniam\Bundle\CoreBundle\Traits;
 
 use \LogicException;
 use Meniam\Bundle\CoreBundle\Entity\User;
+use Meniam\Bundle\CoreBundle\Service\DateService;
 use Meniam\Bundle\CoreBundle\Service\FileStorageService;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\AutotextBundle\Autotext;
@@ -49,6 +50,14 @@ trait ServiceSystemTrait
         /** @var RequestStack $requestStack */
         $requestStack = $this->getService('request_stack');
         return $requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @return DateService
+     */
+    protected function getDateService()
+    {
+        return $this->getService(DateService::class);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Meniam\Bundle\CoreBundle\Command;
 
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Slug;
+use Meniam\Bundle\CoreBundle\Service\DateService;
 use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
@@ -50,6 +51,7 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
             LoggerService::class,
             MemcacheService::class,
             EntityManagerInterface::class,
+            DateService::class,
             'router' => '?'.RouterInterface::class,
             'request_stack' => '?'.RequestStack::class,
             'http_kernel' => '?'.HttpKernelInterface::class,

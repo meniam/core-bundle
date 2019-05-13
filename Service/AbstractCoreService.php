@@ -48,6 +48,7 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
             MemcacheService::class,
             EntityManagerInterface::class,
             TranslatorInterface::class,
+            DateService::class,
             'validator' => '?'.ValidatorInterface::class,
             'router' => '?'.RouterInterface::class,
             'request_stack' => '?'.RequestStack::class,
@@ -58,7 +59,7 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
             'twig' => '?'.Environment::class,
             'doctrine' => '?'.ManagerRegistry::class,
             'security.token_storage' => '?'.TokenStorageInterface::class,
-            'parameter_bag' => '?'.ContainerBagInterface::class,
+            'parameter_bag' => ContainerBagInterface::class,
         ];
     }
 
