@@ -36,7 +36,7 @@ class DateExtension extends AbstractExtension
         }
 
         $result = date($format, $date);
-        //$result = $this->dateReplace($result);
+        $result = $this->dateReplace($result);
 
         setlocale(LC_TIME, $oldLocal);
 
@@ -70,7 +70,7 @@ class DateExtension extends AbstractExtension
         }
 
         $result = str_replace(', 00:00', '', $result);
-        //$result = $this->getDateService()->dateReplace($result);
+        $result = $this->dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {
@@ -113,5 +113,16 @@ class DateExtension extends AbstractExtension
         }
 
         return trim($result);
+    }
+
+    private function dateReplace(string $date, $locale = null)
+    {
+        if (!$locale) $locale = 'ru';
+
+        if (isset($this->dateReplaces[$locale])) {
+            $date = strtr($date, $this->dateReplaces[$locale]);
+        }
+
+        return $date;
     }
 }
