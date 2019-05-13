@@ -3,6 +3,7 @@
 namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
 use DateTime;
+use Meniam\Bundle\CoreBundle\Util\DateUtil;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -36,7 +37,7 @@ class DateExtension extends AbstractExtension
         }
 
         $result = date($format, $date);
-        $result = $this->dateReplace($result);
+        $result = DateUtil::dateReplace($result);
 
         setlocale(LC_TIME, $oldLocal);
 
@@ -70,7 +71,7 @@ class DateExtension extends AbstractExtension
         }
 
         $result = str_replace(', 00:00', '', $result);
-        $result = $this->dateReplace($result);
+        $result = DateUtil::dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {

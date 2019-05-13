@@ -48,7 +48,6 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
             MemcacheService::class,
             EntityManagerInterface::class,
             TranslatorInterface::class,
-            DateService::class,
             'validator' => '?'.ValidatorInterface::class,
             'router' => '?'.RouterInterface::class,
             'request_stack' => '?'.RequestStack::class,

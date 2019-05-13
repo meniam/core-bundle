@@ -57,12 +57,8 @@ services:
   Meniam\Bundle\CoreBundle\Service\:
     resource: '../../Service/**/*.php'
     exclude:
-      - '../../Service/{Abstract,Date}Service.php'
+      - '../../Service/{Abstract}Service.php'
     public: true
-
-  Meniam\Bundle\CoreBundle\Service\DateService:
-    class: Meniam\Bundle\CoreBundle\Service\DateService
-    arguments: [ "@service_container", "%date_replaces%" ]
 
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension

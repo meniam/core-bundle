@@ -4,7 +4,6 @@ namespace Meniam\Bundle\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Meniam\AutotextBundle\Autotext;
-use Meniam\Bundle\CoreBundle\Service\DateService;
 use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Service\PageCache;
@@ -45,7 +44,6 @@ abstract class AbstractCoreController extends AbstractController
             PageCache::class,
             Autotext::class,
             ValidatorInterface::class,
-            DateService::class,
         ]);
     }
 
