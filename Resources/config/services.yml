@@ -57,7 +57,7 @@ services:
   Meniam\Bundle\CoreBundle\Service\:
     resource: '../../Service/**/*.php'
     exclude:
-      - '../../Service/{Abstract|Date}Service.php'
+      - '../../Service/{Abstract,Date}Service.php'
     public: true
 
   Meniam\Bundle\CoreBundle\Twig\Service\DateService:
