@@ -60,8 +60,8 @@ services:
       - '../../Service/{Abstract,Date}Service.php'
     public: true
 
-  Meniam\Bundle\CoreBundle\Twig\Service\DateService:
-    class: Meniam\Bundle\CoreBundle\Twig\Service\DateService
+  Meniam\Bundle\CoreBundle\Service\DateService:
+    class: Meniam\Bundle\CoreBundle\Service\DateService
     arguments: [ "@service_container", "%date_replaces%" ]
 
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
