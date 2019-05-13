@@ -2,7 +2,7 @@ parameters:
   storage_directory: "%kernel.project_dir%/var/storage"
   public_directory: "%kernel.project_dir%/public"
 
-  date_replace:
+  date_replaces:
     ru:
       Today: Сегодня
       Yesterday: Вчера
@@ -69,7 +69,7 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
-    arguments: [ "@service_container" ]
+    arguments: [ "%date_replaces%" ]
     tags:
       - { name: twig.extension }
 

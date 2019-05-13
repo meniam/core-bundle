@@ -3,12 +3,17 @@
 namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
 use DateTime;
-use Meniam\Bundle\CoreBundle\Traits\DateTrait;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class DateExtension extends AbstractServiceSubscriberExtension
+class DateExtension extends AbstractExtension
 {
-    use DateTrait;
+    private $dateReplaces;
+
+    public function __construct($dateReplaces)
+    {
+        $this->dateReplaces = $dateReplaces;
+    }
 
     public function getFilters()
     {
@@ -31,7 +36,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         $result = date($format, $date);
-        $result = $this->dateReplace($result);
+        //$result = $this->dateReplace($result);
 
         setlocale(LC_TIME, $oldLocal);
 
@@ -65,7 +70,7 @@ class DateExtension extends AbstractServiceSubscriberExtension
         }
 
         $result = str_replace(', 00:00', '', $result);
-        $result = $this->getDateService()->dateReplace($result);
+        //$result = $this->getDateService()->dateReplace($result);
         setlocale(LC_TIME, $oldLocal);
 
         if ($withTimeTag) {
