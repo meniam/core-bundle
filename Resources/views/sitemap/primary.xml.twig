@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {%- for file in files %}{% spaceless %}
+    {%- for file in files %}{% apply spaceless %}
     <sitemap>
         <loc>{{ file }}</loc>
         <lastmod>{{ "now"|date("Y-m-d") }}</lastmod>
     </sitemap>
-    {% endspaceless %}{% endfor -%}
+    {% endapply %}{% endfor -%}
 </sitemapindex>

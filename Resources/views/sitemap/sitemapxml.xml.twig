@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {%- for url in urls %}{% spaceless %}
+    {%- for url in urls %}{% apply spaceless %}
         <url>
             <loc>{{url.loc}}</loc>
             {% if url.lastmod is defined %}
@@ -15,5 +15,5 @@
                 <priority>{{url.priority}}</priority>
             {% endif %}
         </url>
-    {% endspaceless %}{% endfor -%}
+    {% endapply %}{% endfor -%}
 </urlset>
