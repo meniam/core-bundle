@@ -15,7 +15,7 @@ class ButtonSaveAndReturnType extends SubmitType
         $resolver->setDefaults(
             [
                 'label' => 'button.save_and_return_labeled',
-                'button_class' => 'outline-secondary',
+                'button_class' => 'outline-secondary btn-save-and-return',
                 'attr' => [
                     'icon' => 'fal-retweet',
                     'align_with_widget' => true,
