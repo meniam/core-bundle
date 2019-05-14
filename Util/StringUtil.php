@@ -13,7 +13,11 @@ class StringUtil
 {
     public static function lcfirst($str, $encoding = 'UTF-8')
     {
-        return mb_strtolower(mb_substr($str, 0, 1, $encoding)) . mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+        $secondChar = mb_substr($str, 1, 1, 'UTF-8');
+        if ($secondChar && !self::isCharUpperCase($secondChar)) {
+            return mb_strtolower(mb_substr($str, 0, 1, $encoding)) . mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+        }
+        return $str;
     }
 
     public static function ucfirst($str, $encoding = 'UTF-8')
@@ -41,6 +45,12 @@ class StringUtil
         $result = parse_url($url, PHP_URL_HOST);
         if (!$withWww) $result = preg_replace('#^www\.#i', '', $result);
         return $result;
+    }
+
+    public static function isCharUpperCase($char)
+    {
+        $upper = 'ЙЦУКЕНГШЩЗХЪЁЭЖДЛОРПАВЫФЯЧСМИТЬБЮQWERTYUIOPLKJHGFDSAZXCVBNM';
+        return (mb_strpos($upper, $char, 0, 'UTF-8') !== false);
     }
 
     /**
