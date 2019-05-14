@@ -9,13 +9,6 @@ use Twig\TwigFilter;
 
 class DateExtension extends AbstractExtension
 {
-    private $dateReplaces;
-
-    public function __construct($dateReplaces)
-    {
-        $this->dateReplaces = $dateReplaces;
-    }
-
     public function getFilters()
     {
         return [
@@ -114,16 +107,5 @@ class DateExtension extends AbstractExtension
         }
 
         return trim($result);
-    }
-
-    private function dateReplace(string $date, $locale = null)
-    {
-        if (!$locale) $locale = 'ru';
-
-        if (isset($this->dateReplaces[$locale])) {
-            $date = strtr($date, $this->dateReplaces[$locale]);
-        }
-
-        return $date;
     }
 }
