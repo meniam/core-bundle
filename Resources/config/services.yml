@@ -20,7 +20,6 @@ services:
 
   Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension:
     class: Meniam\Bundle\CoreBundle\Twig\Extension\DateExtension
-    arguments: [ "%date_replaces%" ]
     tags:
       - { name: twig.extension }
 
