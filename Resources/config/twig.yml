@@ -3,4 +3,5 @@ twig:
     - '@CoreBundle/form/type/bootstrap.html.twig'
     - '@CoreBundle/form/type/form_tabs.html.twig'
     - '@CoreBundle/form/type/markdown.html.twig'
+    - '@CoreBundle/form/type/codemirror.html.twig'
     - '@CoreBundle/form/type/super_collection.html.twig'

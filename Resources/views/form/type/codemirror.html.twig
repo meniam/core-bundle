@@ -1,0 +1,71 @@
+{% block codemirror_widget %}
+    {{ form_widget(form) }}
+    {{ page_meta_asset_add_javascript('/static/js/shared/codemirror.js') }}
+    {{ page_meta_asset_add_style('/static/css/shared/codemirror.css') }}
+    {# % if not get_from_storage('codemirror_inited') %}
+        <!--script type="text/javascript" src="{{ asset('static/js/codemirror.js') }}"></script-->
+        {{ put_to_storage('codemirror_inited', true) }}
+    {% endif % #}
+    {% javascript %}
+        <script>
+            $(document).ready(function () {
+                var CodeMirror_{{ id }} = CodeMirror.fromTextArea($('#{{ id }}')[0], {
+                    {% if codemirror.line_numbers %}
+                    lineNumbers: true,
+                    {% endif %}
+                    autoRefresh: true,
+                    indentUnit: 2,
+                    smartIndent: true,
+                    tabSize: 2,
+                    indentWithTabs: false,
+                    {% if codemirror.match_tags %}
+                    matchTags: {
+                        bothTags: true
+                    },
+                    {% endif %}
+                    {% if codemirror.style_active_line %}
+                    styleActiveLine: true,
+                    {% endif %}
+                    {% if codemirror.auto_close_tags %}
+                    autoCloseTags: true,
+                    {% endif %}
+                    {% if codemirror.match_brackets %}
+                    matchBrackets: true,
+                    {% endif %}
+                    extraKeys: {
+                        "Ctrl-J": "toMatchingTag",
+                        "Ctrl-Space": "autocomplete",
+                        "Alt-F": "findPersistent"
+                    },
+                    {% if codemirror.mode == 'json' %}
+                    gutters: ["CodeMirror-lint-markers"],
+                    lintOnChange: true,
+                    lint: true,
+                    mode: {name: "javascript", json: true},
+                    {% elseif codemirror.mode == 'yaml' %}
+                    gutters: ["CodeMirror-lint-markers"],
+                    lintOnChange: true,
+                    lint: true,
+                    mode: "text/x-yaml",
+                    {% else %}
+                    mode: "{{ codemirror.mode }}",
+                    {% endif %}
+                });
+
+                CodeMirror_{{ id }}.on('change', function (cm) {
+                    cm.save();
+                });
+
+                CodeMirror_{{ id }}.addKeyMap(
+                    {
+                        Tab: function (cm) {
+                            var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                            cm.replaceSelection(spaces);
+                        }
+                    }
+                );
+
+            });
+        </script>
+    {% endjavascript %}
+{% endblock %}
