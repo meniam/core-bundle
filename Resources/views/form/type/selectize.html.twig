@@ -1,0 +1,95 @@
+{% block selectize_widget %}
+    {{ form_widget(form) }}
+    <script type="text/javascript">
+        $('#{{ id }}').data('preload-value', $('#{{ id }}').attr('value'));
+        var selectizeInstance = $('#{{ id }}').selectize({
+            persist: false,
+            preload: true,
+            dropdownParent: "body",
+            {% if selectize.multiple is defined and selectize.multiple %}
+            //plugins: ['drag_drop'],
+            delimiter: ',',
+            {% if selectize.max_items is defined and selectize.max_items > 0 %}
+            maxItems: {{ selectize.max_items }},
+            {% endif %}
+            {% else %}
+            maxItems: 1,
+            {% endif %}
+            {% if selectize.ajax_load_url is defined %}
+            load: function (query, callback) {
+                var firstInit = false;
+                if (!query && $('#{{ id }}').data('preload-value')) {
+                    query = $('#{{ id }}').data('preload-value');
+                    $('#{{ id }}').data('preload-value', '');
+                    firstInit = true;
+                }
+
+                $.ajax({
+                    url: '{{ selectize.ajax_load_url }}',
+                    type: 'GET',
+                    data: {
+                        q: query
+                    },
+                    error: function() {
+                        callback();
+                    },
+                    {% if selectize.multiple is defined and selectize.multiple and (selectize.allow_ids is not defined or not selectize.allow_ids) %}
+                    success: function(items) {
+                        $.each(items, function(key, item) {
+                            item.value = item.text;
+                        });
+                        console.log(items);
+                        callback(items);
+                    },
+                    {% else %}
+                    success: function(items) {
+                        $('#{{ id }}')[0].selectize.clear();
+                        $('#{{ id }}')[0].selectize.clearOptions();
+                        $('#{{ id }} option').remove();
+                        callback(items);
+                        firstInit && $('#{{ id }}')[0].selectize.setValue('{{ value|trim }}');
+                    }
+                    {% endif %}
+                });
+            },
+            {% endif %}
+            render: {
+                option_create: function(data, escape) {
+                    return '<div class="create">Создать &laquo;<strong>' + escape(data.input) + '</strong>&raquo;</div>';
+                }
+            },
+            {% if selectize.ajax_create_url is defined %}
+            create: function (input, callback) {
+                $.ajax({
+                    url: '{{ selectize.ajax_create_url }}',
+                    type: 'GET',
+                    data: {
+                        name: input
+                    },
+                    error: function () {
+                        alert('Some error while create entity')
+                    },
+                    success: function (response) {
+                        return callback({
+                            {% if selectize.multiple is defined and selectize.multiple %}
+                            value: response.text,
+                            text : response.text
+                            {% else %}
+                            value: response.value,
+                            text : response.text
+                            {% endif %}
+                        });
+                    }
+                });
+            }
+            {# % else %}
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            } #}
+            {% endif %}
+        });
+    </script>
+{% endblock %}

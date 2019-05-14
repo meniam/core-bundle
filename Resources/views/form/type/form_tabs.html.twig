@@ -1,0 +1,74 @@
+{% block form_widget_compound %}
+    <div {{ block('widget_container_attributes') }}>
+        {% if form.parent is empty %}
+            {{ form_errors(form) }}
+        {% endif %}
+        {% if form.vars.groups is defined %}
+            {% for group,items in form.vars.groups %}
+                <fieldset>
+                    <legend>{{ group|title }}</legend>
+                    {% for item in items %}
+                        {{ form_row(form[item]) }}
+                    {% endfor %}
+                </fieldset>
+            {% endfor %}
+        {% endif %}
+        {% if form.vars.tabs is defined %}
+            {% for namespace,tabs in form.vars.tabs %}
+                {% if namespace != 'system' %}
+                    <ul id="{{ namespace }}" class="nav nav-tabs">
+                        {% for tab in tabs %}
+                            <li class="nav-item">
+                                <a id="{{ namespace }}-{{ tab.name }}-tab" class="nav-link{% if loop.first %} active{% endif %}" href="#{{ namespace }}-{{ tab.name }}" data-toggle="tab">{{ tab.label|raw }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+
+            {% for namespace,tabs in form.vars.tabs %}
+                {% for tab in tabs %}
+                    {% if tab.name == 'header' %}
+                        <div class="tab-content tab-content-bordered" style="padding-bottom: 0">
+                            <div class="tab-pane active header in" style="opacity: 1">
+                                {% for element in tab.elements %}
+                                    {{ form_row(form[element]) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {% for namespace,tabs in form.vars.tabs %}
+                {% if namespace != 'system' %}
+                    <div class="tab-content tab-content-bordered" style="padding-bottom: 0">
+                        {% for tab in tabs %}
+                            <div class="tab-pane {% if loop.first %}active in{% else %}fade{% endif %}" id="{{ namespace }}-{{ tab.name }}" role="tabpanel" aria-labelledby="{{ namespace }}-{{ tab.name }}-tab">
+                                {% for element in tab.elements %}
+                                    {{ form_row(form[element]) }}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for namespace,tabs in form.vars.tabs %}
+                {% for tab in tabs %}
+                    {% if tab.name == 'footer' %}
+                        <div class="tab-content tab-content-bordered" style="padding-bottom: 0;opacity: 1">
+                            <div class="tab-pane active header in">
+                                {% for element in tab.elements %}
+                                    {{ form_row(form[element]) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+        {% endif %}
+        {{ form_rest(form) }}
+    </div>
+{% endblock form_widget_compound %}
