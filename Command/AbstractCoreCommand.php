@@ -8,7 +8,6 @@ use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
-use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
@@ -36,7 +35,6 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
 {
     use CacheTrait;
     use ConnectionTrait;
-    use StringTrait;
 
     /**
      * @var ContainerInterface

@@ -43,6 +43,72 @@ class StringUtil
         return $result;
     }
 
+    /**
+     * Check if the $haystack string starts with the substring $needle
+     *
+     * @param  string          $haystack
+     * @param  string|string[] $needle
+     * @param bool             $caseSensitive
+     * @return bool
+     */
+    public static function startsWith($haystack, $needle, $caseSensitive = true)
+    {
+        $status = false;
+        $compareFunc = $caseSensitive ? 'mb_strpos' : 'mb_stripos';
+        foreach ((array)$needle as $each_needle) {
+            $status = $each_needle === '' || $compareFunc($haystack, $each_needle, 0, 'UTF-8') === 0;
+            if ($status) {
+                break;
+            }
+        }
+
+        return $status;
+    }
+
+    /**
+     * Check if the $haystack string ends with the substring $needle
+     *
+     * @param  string          $haystack
+     * @param  string|string[] $needle
+     * @param bool             $caseSensitive
+     * @return bool
+     */
+    public static function endsWith($haystack, $needle, $caseSensitive = true)
+    {
+        $status = false;
+        $compareFunc = $caseSensitive ? 'mb_strrpos' : 'mb_strripos';
+        foreach ((array)$needle as $each_needle) {
+            $expectedPosition = mb_strlen($haystack) - mb_strlen($each_needle);
+            $status = $each_needle === '' || $compareFunc($haystack, $each_needle, 0, 'UTF-8') === $expectedPosition;
+            if ($status) {
+                break;
+            }
+        }
+
+        return $status;
+    }
+
+    /**
+     * Check if the $haystack string contains the substring $needle
+     *
+     * @param  string          $haystack
+     * @param  string|string[] $needle
+     * @param  bool            $caseSensitive
+     * @return bool
+     */
+    public static function contains($haystack, $needle, $caseSensitive = true)
+    {
+        $status = false;
+        $compareFunc = $caseSensitive ? 'mb_strpos' : 'mb_stripos';
+        foreach ((array)$needle as $each_needle) {
+            $status = $each_needle === '' || $compareFunc($haystack, $each_needle, 0, 'UTF-8') !== false;
+            if ($status) {
+                break;
+            }
+        }
+        return $status;
+    }
+
     public static function truncate($value, $length = 30, $preserve = false, $separator = '...')
     {
         if (mb_strlen($value, 'UTF-8') <= $length) {

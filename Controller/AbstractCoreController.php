@@ -13,7 +13,6 @@ use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
-use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Meniam\Bundle\CoreBundle\Traits\TranslatorTrait;
 use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Psr\Log\LoggerInterface;
@@ -24,7 +23,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractCoreController extends AbstractController
 {
-    use StringTrait;
     use TranslatorTrait;
     use ServiceSystemTrait;
     use CacheTrait;

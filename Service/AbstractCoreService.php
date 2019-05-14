@@ -9,7 +9,6 @@ use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearchId;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
-use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -32,7 +31,6 @@ use Twig\Environment;
 abstract class AbstractCoreService implements ServiceSubscriberInterface
 {
     use CacheTrait;
-    use StringTrait;
     use ServiceSystemTrait;
     use ConnectionTrait;
     use PagerTrait;

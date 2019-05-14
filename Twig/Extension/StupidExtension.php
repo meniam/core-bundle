@@ -4,7 +4,6 @@ namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Typographics;
-use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Meniam\Bundle\CoreBundle\Twig\TokenParser\NoindexTokenParser;
 use Meniam\Bundle\CoreBundle\Util\StringUtil;
 use Symfony\Component\HttpFoundation\File\File;
@@ -14,8 +13,6 @@ use Twig\TwigFunction;
 
 class StupidExtension extends AbstractExtension
 {
-    use StringTrait;
-
     /**
      * @var array
      */
@@ -26,16 +23,16 @@ class StupidExtension extends AbstractExtension
     {
         return [
             # Strings
-            new TwigFilter('lcfirst', array($this, 'lcfirst')),
-            new TwigFilter('ucfirst', array($this, 'ucfirst')),
-            new TwigFilter('ucwords', array($this, 'ucwords')),
+            new TwigFilter('lcfirst', array(StringUtil::class, 'lcfirst')),
+            new TwigFilter('ucfirst', array(StringUtil::class, 'ucfirst')),
+            new TwigFilter('ucwords', array(StringUtil::class, 'ucwords')),
 
             new TwigFilter('ltrim', [$this, 'ltrimFilter']),
             new TwigFilter('rtrim', [$this, 'rtrimFilter']),
 
-            new TwigFilter('contains', [$this, 'containsFilter']),
-            new TwigFilter('ends_with', [$this, 'endsWithFilter']),
-            new TwigFilter('starts_with', [$this, 'startsWithFilter']),
+            new TwigFilter('contains', [StringUtil::class, 'contains']),
+            new TwigFilter('ends_with', [StringUtil::class, 'endsWith']),
+            new TwigFilter('starts_with', [StringUtil::class, 'startsWith']),
 
             new TwigFilter('typo', [$this, 'getTypoFilter']),
 
@@ -116,22 +113,6 @@ class StupidExtension extends AbstractExtension
     public function getFromStorage($var, $default = null)
     {
         return isset($this->storage[$var]) ? $this->storage[$var] : $default;
-    }
-
-    public function containsFilter($haystack, $needle, $caseSensitive = true)
-    {
-        if (empty($needle)) return $haystack;
-        return $this->contains($haystack, $needle, $caseSensitive);
-    }
-
-    public function endsWithFilter($haystack, $needle, $caseSensitive = true)
-    {
-        return $this->endsWith($haystack, $needle, $caseSensitive);
-    }
-
-    public function startsWithFilter($haystack, $needle, $caseSensitive = true)
-    {
-        return $this->startsWith($haystack, $needle, $caseSensitive);
     }
 
     public function stringFilter($input)
