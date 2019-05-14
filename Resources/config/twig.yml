@@ -1,3 +1,4 @@
 twig:
   form_themes:
     - '@CoreBundle/form/type/markdown.html.twig'
+    - '@CoreBundle/form/type/super_collection.html.twig'
