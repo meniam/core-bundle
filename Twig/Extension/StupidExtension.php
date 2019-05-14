@@ -128,9 +128,9 @@ class StupidExtension extends AbstractExtension
     {
         return [
             new NoindexTokenParser(),
-            //new MarkdownTokenParser(),
-            //new TypoTokenParser(),
-            //new SwitchTokenParser()
+            new MarkdownTokenParser(),
+            new TypoTokenParser(),
+            new SwitchTokenParser()
         ];
     }
 

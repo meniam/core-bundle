@@ -19,7 +19,7 @@ class NoindexNode extends Node
             ->write('ob_start();' . PHP_EOL)
             ->subcompile($this->getNode('body'))
             ->write('$body = ob_get_clean();' . PHP_EOL)
-            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->noindex($body);' . PHP_EOL)
+            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->noindex($content);' . PHP_EOL)
         ;
     }
 }

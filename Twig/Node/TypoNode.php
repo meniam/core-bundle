@@ -34,7 +34,7 @@ class TypoNode extends Node implements NodeOutputInterface
             ->write('$lines = explode("\n", $content);' . PHP_EOL)
             ->write('$content = preg_replace(\'/^\' . $matches[0]. \'/\', "", $lines);' . PHP_EOL)
             ->write('$content = join("\n", $content);' . PHP_EOL)
-            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->typo($body);' . PHP_EOL);
+            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->typo($content);' . PHP_EOL);
 
     }
 }
