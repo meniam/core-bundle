@@ -57,8 +57,8 @@ class StupidExtension extends AbstractExtension
             new TwigFilter('base64_decode', [$this, 'base64Decode']),
             new TwigFilter('yaml_encode',   [$this, 'yamlEncode']),
             new TwigFilter('yaml_decode',   [$this, 'yamlDecode']),
-            new TwigFunction('json_decode', [$this, 'jsonDecode']),
-            new TwigFunction('json_encode', [$this, 'jsonEncode']),
+            new TwigFilter('json_decode', [$this, 'jsonDecode']),
+            new TwigFilter('json_encode', [$this, 'jsonEncode']),
 
             # Pretty
             new TwigFilter('file_pretty_size', array($this, 'filePrettySizeFilter')),
