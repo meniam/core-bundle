@@ -1,0 +1,4 @@
+{% block entity_readonly_row %}
+    <input type="hidden" class="hidden-control" name="{{ form.vars.full_name }}" value="{{ form.vars.value }}" />
+    <{{ form.vars.attr.tag | default('strong') }}>{{ form.vars.data }}</{{ form.vars.attr.tag | default('strong') }}>
+{% endblock %}
