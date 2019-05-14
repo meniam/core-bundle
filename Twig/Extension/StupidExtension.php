@@ -63,9 +63,9 @@ class StupidExtension extends AbstractExtension
 
             // Casts
             new TwigFilter('string', [$this, 'stringFilter']),
-            new TwigFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('int', [$this, 'intFilter']),
             new TwigFilter('bool', [$this, 'boolFilter']),
-            new TwigFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('float', [$this, 'floatFilter']),
             new TwigFilter('array', [$this, 'arrayFilter']),
 
             // System
@@ -83,7 +83,6 @@ class StupidExtension extends AbstractExtension
 
             new TwigFilter('typo', [$this, 'getTypoFilter']),
 
-
             # storage
             new TwigFunction('put_to_storage', array($this, 'putToStorage'), ['is_safe' => ['all']]),
             new TwigFunction('get_from_storage', array($this, 'getFromStorage'), ['is_safe' => ['all']]),
@@ -92,7 +91,15 @@ class StupidExtension extends AbstractExtension
             new TwigFunction('pathStarts', array($this, 'pathStarts'), ['is_safe' => ['all']]),
             new TwigFunction('pathEquals', array($this, 'pathEquals'), ['is_safe' => ['all']]),
 
-            new TwigFunction('spacer', array($this, 'spacerFilter'), ['is_safe' => ['all']]),
+            new TwigFunction('spacer', array($this, 'spacer'), ['is_safe' => ['all']]),
+
+
+            // Casts
+            new TwigFunction('string', [$this, 'stringFilter']),
+            new TwigFunction('int',    [$this, 'intFilter']),
+            new TwigFunction('bool',   [$this, 'boolFilter']),
+            new TwigFunction('float',  [$this, 'floatFilter']),
+            new TwigFunction('array',  [$this, 'arrayFilter']),
         );
     }
 
@@ -219,7 +226,7 @@ class StupidExtension extends AbstractExtension
         return '';
     }
 
-    public function spacerAction($width, $tag = 'div')
+    public function spacer($width, $tag = 'div')
     {
         $width = (preg_match('#^\d+$#', $width)) ? $width . 'px' : $width;
         return sprintf('<%s style="width:%s"></%s>', $tag, $width, $tag);
