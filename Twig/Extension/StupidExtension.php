@@ -8,6 +8,7 @@ use Meniam\Bundle\CoreBundle\Filter\Rule\MarkdownWithHtml;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Typographics;
 use Meniam\Bundle\CoreBundle\Twig\TokenParser\NoindexTokenParser;
 use Meniam\Bundle\CoreBundle\Twig\TokenParser\SwitchTokenParser;
+use Meniam\Bundle\CoreBundle\Twig\TokenParser\TypoTokenParser;
 use Meniam\Bundle\CoreBundle\Util\StringUtil;
 use Meniam\Bundle\CoreBundle\Util\YamlUtil;
 use Symfony\Component\HttpFoundation\File\File;
@@ -38,7 +39,7 @@ class StupidExtension extends AbstractExtension
             new TwigFilter('ends_with', [StringUtil::class, 'endsWith']),
             new TwigFilter('starts_with', [StringUtil::class, 'startsWith']),
 
-            new TwigFilter('typo', [$this, 'getTypoFilter']),
+            new TwigFilter('typo', [$this, 'typo']),
 
             new TwigFilter('truncate', [StringUtil::class, 'safeTruncate']),
             new TwigFilter('truncate_html', [StringUtil::class, 'safeTruncateHtml']),
@@ -81,7 +82,7 @@ class StupidExtension extends AbstractExtension
             # markdown
             new TwigFunction('markdown', array($this, 'markdown'), ['is_safe' => ['all']]),
 
-            new TwigFilter('typo', [$this, 'getTypoFilter']),
+            new TwigFilter('typo', [$this, 'typo']),
 
             # storage
             new TwigFunction('put_to_storage', array($this, 'putToStorage'), ['is_safe' => ['all']]),
@@ -93,6 +94,12 @@ class StupidExtension extends AbstractExtension
 
             new TwigFunction('spacer', array($this, 'spacer'), ['is_safe' => ['all']]),
 
+            # System
+            new TwigFunction('array_key_exists', 'array_key_exists'),
+            new TwigFunction('array_unique', 'array_unique'),
+            new TwigFunction('print_r', 'print_r'),
+            new TwigFunction('range', 'range'),
+            new TwigFunction('pathinfo', 'pathinfo'),
 
             // Casts
             new TwigFunction('string', [$this, 'stringFilter']),
@@ -111,6 +118,7 @@ class StupidExtension extends AbstractExtension
         return [
             new NoindexTokenParser(),
             new MarkdownTokenParser(),
+            new TypoTokenParser(),
             new SwitchTokenParser()
         ];
     }
@@ -232,7 +240,7 @@ class StupidExtension extends AbstractExtension
         return sprintf('<%s style="width:%s"></%s>', $tag, $width, $tag);
     }
 
-    public function getTypoFilter($str)
+    public function typo($str)
     {
         return FilterStatic::filterValue($str, Typographics::class);
     }
