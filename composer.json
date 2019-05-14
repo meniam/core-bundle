@@ -40,7 +40,8 @@
         "league/commonmark-extras": "^0.4.0",
         "league/commonmark-ext-inlines-only": "^0.2.0",
         "tgalopin/html-sanitizer": "^1.2",
-        "antoligy/dom-string-iterators": "^1.0"
+        "antoligy/dom-string-iterators": "^1.0",
+        "symfony/yaml": "^4.2"
     },
     "require-dev": {
     },

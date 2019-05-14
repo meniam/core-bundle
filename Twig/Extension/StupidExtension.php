@@ -2,10 +2,14 @@
 
 namespace Meniam\Bundle\CoreBundle\Twig\Extension;
 
+use Meniam\Bundle\CoreBundle\Twig\TokenParser\MarkdownTokenParser;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
+use Meniam\Bundle\CoreBundle\Filter\Rule\MarkdownWithHtml;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Typographics;
 use Meniam\Bundle\CoreBundle\Twig\TokenParser\NoindexTokenParser;
+use Meniam\Bundle\CoreBundle\Twig\TokenParser\SwitchTokenParser;
 use Meniam\Bundle\CoreBundle\Util\StringUtil;
+use Meniam\Bundle\CoreBundle\Util\YamlUtil;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -23,12 +27,12 @@ class StupidExtension extends AbstractExtension
     {
         return [
             # Strings
-            new TwigFilter('lcfirst', array(StringUtil::class, 'lcfirst')),
-            new TwigFilter('ucfirst', array(StringUtil::class, 'ucfirst')),
-            new TwigFilter('ucwords', array(StringUtil::class, 'ucwords')),
+            new TwigFilter('lcfirst', [StringUtil::class, 'lcfirst']),
+            new TwigFilter('ucfirst', [StringUtil::class, 'ucfirst']),
+            new TwigFilter('ucwords', [StringUtil::class, 'ucwords']),
 
-            new TwigFilter('ltrim', [$this, 'ltrimFilter']),
-            new TwigFilter('rtrim', [$this, 'rtrimFilter']),
+            new TwigFilter('ltrim', ['ltrim']),
+            new TwigFilter('rtrim', ['rtrim']),
 
             new TwigFilter('contains', [StringUtil::class, 'contains']),
             new TwigFilter('ends_with', [StringUtil::class, 'endsWith']),
@@ -39,15 +43,19 @@ class StupidExtension extends AbstractExtension
             new TwigFilter('truncate', [StringUtil::class, 'safeTruncate']),
             new TwigFilter('truncate_html', [StringUtil::class, 'safeTruncateHtml']),
 
+            new TwigFilter('markdown', [StringUtil::class, 'safeTruncate'], ['is_safe' => ['all']]),
+
             # Arrays
             new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
             new TwigFilter('array_unique', 'array_unique'),
 
-            # Hash
-            new TwigFilter('sha1', array($this, 'sha1Filter')),
-            new TwigFilter('md5', array($this, 'md5Filter')),
+            # Hash and decodes
+            new TwigFilter('sha1',          [$this, 'sha1Filter']),
+            new TwigFilter('md5',           [$this, 'md5Filter']),
             new TwigFilter('base64_encode', [$this, 'base64EncodeFilter']),
             new TwigFilter('base64_decode', [$this, 'base64DecodeFilter']),
+            new TwigFilter('yaml_encode',   [$this, 'yamlEncodeFilter']),
+            new TwigFilter('yaml_decode',   [$this, 'yamlDecodeFilter']),
 
             # Pretty
             new TwigFilter('file_pretty_size', array($this, 'filePrettySizeFilter')),
@@ -70,6 +78,12 @@ class StupidExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
+            # markdown
+            new TwigFunction('markdown', array($this, 'markdown'), ['is_safe' => ['all']]),
+
+            new TwigFilter('typo', [$this, 'getTypoFilter']),
+
+
             # storage
             new TwigFunction('put_to_storage', array($this, 'putToStorage'), ['is_safe' => ['all']]),
             new TwigFunction('get_from_storage', array($this, 'getFromStorage'), ['is_safe' => ['all']]),
@@ -77,7 +91,6 @@ class StupidExtension extends AbstractExtension
             # path, url
             new TwigFunction('pathStarts', array($this, 'pathStarts'), ['is_safe' => ['all']]),
             new TwigFunction('pathEquals', array($this, 'pathEquals'), ['is_safe' => ['all']]),
-            new TwigFunction('path_save_get', array($this, 'pathSaveGet'), ['is_safe' => ['all']]),
 
             new TwigFunction('spacer', array($this, 'spacerFilter'), ['is_safe' => ['all']]),
         );
@@ -89,10 +102,27 @@ class StupidExtension extends AbstractExtension
     public function getTokenParsers()
     {
         return [
-            new NoindexTokenParser()
+            new NoindexTokenParser(),
+            new MarkdownTokenParser(),
+            new SwitchTokenParser()
         ];
     }
 
+    public function yamlEncodeFilter($data, $inline = 10)
+    {
+        return YamlUtil::encode($data, $inline);
+    }
+
+    public function yamlDecodeFilter($data)
+    {
+        return YamlUtil::decode($data);
+    }
+
+
+    public function markdown($text)
+    {
+        return FilterStatic::filterValue($text, MarkdownWithHtml::class);
+    }
 
     public function noindex($text)
     {
@@ -158,16 +188,6 @@ class StupidExtension extends AbstractExtension
     public function base64DecodeFilter($str)
     {
         return base64_decode((string)$str);
-    }
-
-    public function ltrimFilter($value, $chars = null)
-    {
-        return ltrim($value, $chars);
-    }
-
-    public function rtrimFilter($value, $chars = null)
-    {
-        return rtrim($value, $chars);
     }
 
     public function filePrettySizeFilter(File $file)
