@@ -40,7 +40,7 @@ class BootstrapExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('bootstrap_set_style', array($this, 'setStyle')),
             new TwigFunction('bootstrap_get_style', array($this, 'getStyle')),
             new TwigFunction('bootstrap_set_col_size', array($this, 'setColSize')),
@@ -53,14 +53,8 @@ class BootstrapExtension extends AbstractExtension
             new TwigFunction('bootstrap_get_simple_col', array($this, 'getSimpleCol')),
             new TwigFunction('bootstrap_backup_form_settings', array($this, 'backupFormSettings')),
             new TwigFunction('bootstrap_restore_form_settings', array($this, 'restoreFormSettings')),
-            new TwigFunction('checkbox_row',null,
-                array('is_safe' => array('html'), 'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode')
-            ),
-            new TwigFunction(
-                'radio_row',
-                null,
-                array('is_safe' => array('html'), 'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode')
-            ),
+            new TwigFunction('checkbox_row',null, array('is_safe' => array('html'), 'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode')),
+            new TwigFunction('radio_row', null, array('is_safe' => array('html'), 'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode')),
             new TwigFunction(
                 'global_form_errors',
                 null,
@@ -71,7 +65,7 @@ class BootstrapExtension extends AbstractExtension
                 array($this, 'formControlStaticFunction'),
                 array('is_safe' => array('html'))
             )
-        );
+        ];
     }
 
     /**
