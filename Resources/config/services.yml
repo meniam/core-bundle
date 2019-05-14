@@ -2,48 +2,6 @@ parameters:
   storage_directory: "%kernel.project_dir%/var/storage"
   public_directory: "%kernel.project_dir%/public"
 
-  date_replaces:
-    ru:
-      Today: Сегодня
-      Yesterday: Вчера
-      January: Января
-      February: Февраля
-      March: Марта
-      April: Апреля
-      May: Мая
-      June: Июня
-      July: Июля
-      August: Августа
-      September: Сентября
-      October: Остября
-      November: Ноября
-      December: Декабря
-      Jan: Янв
-      Feb: Фев
-      Mar: Мар
-      Apr: Апр
-      Jun: Июн
-      Jul: Июл
-      Aug: Авг
-      Sep: Сен
-      Oct: Ост
-      Nov: Ноя
-      Dec: Дек
-      Monday: Понедельник
-      Tuesday: Вторник
-      Wednesday: Среда
-      Thursday: Четверт
-      Friday: Пятница
-      Saturday: Суббота
-      Sunday: Воскресенье
-      Mon: Пон
-      Tue: Вто
-      Wed: Сре
-      Thu: Чет
-      Fri: Пят
-      Sat: Суб
-      Sun: Вос
-
 services:
   _defaults:
     autowire: true
@@ -99,8 +57,15 @@ services:
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-  Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabButtonExtension:
-    class: Meniam\Bundle\CoreBundle\Twig\TypeExtension\TabButtonExtension
-    tags:
-      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
+    Meniam\Bundle\CoreBundle\Form\Bootstrap\Extension\ButtonTypeExtension:
+      tags:
+        - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
+
+    Meniam\Bundle\CoreBundle\Form\Bootstrap\Extension\InputGroupButtonExtension:
+      tags:
+        - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+
+    Meniam\Bundle\CoreBundle\Form\Bootstrap\Extension\PlaintextControlExtension:
+      tags:
+        - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
