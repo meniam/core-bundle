@@ -1,0 +1,16 @@
+<form {% block formData %}{% endblock %}>
+    <div class="modal-header">
+        <h4 class="modal-title">{% block title %}Предупреждение{% endblock %}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    {% block content %}
+    <div class="modal-body">
+        {% block body %}{% endblock %}
+    </div>
+    {% endblock %}
+    <div class="modal-footer">
+        {% block buttons %}
+            <button class="btn btn-primary" data-dismiss="modal">OK</button>
+        {% endblock %}
+    </div>
+</form>

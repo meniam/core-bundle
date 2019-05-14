@@ -1,0 +1,21 @@
+{% extends '@CoreBundle/form/modal.html.twig' %}
+{% block formData %}{% if actions_disabled is not defined or not actions_disabled %}method="post" action="{{ path( route , route_params) }}"{% endif %}{% endblock %}
+
+{% block title %}
+    {% if actions_disabled is defined and actions_disabled %}
+        {{ title | default('Удаление записи запрещено') }}
+    {% else %}
+        {{ title | default('Подтвердите удаление') }}
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <div>{{ message | default('Вы действительно желаете удалить запись?') }}</div>
+{% endblock %}
+{% block buttons %}
+    {% if actions_disabled is defined and actions_disabled %}
+        <span class="btn btn-success" data-dismiss="modal">Всё понятно</span>
+    {% else %}
+        <button class="btn btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">{{ "button.cancel" | trans }}</button>
+        <button type="submit" class="focus btn btn-danger">{{ "button.delete" | trans }}</button>
+    {% endif %}
+{% endblock %}
