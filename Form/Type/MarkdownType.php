@@ -12,11 +12,6 @@ class MarkdownType extends AbstractType
         return TextareaType::class;
     }
 
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
-
     public function getBlockPrefix()
     {
         return 'markdown';
