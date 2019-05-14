@@ -6,6 +6,7 @@ use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Typographics;
 use Meniam\Bundle\CoreBundle\Traits\StringTrait;
 use Meniam\Bundle\CoreBundle\Twig\TokenParser\NoindexTokenParser;
+use Meniam\Bundle\CoreBundle\Util\StringUtil;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -38,8 +39,12 @@ class StupidExtension extends AbstractExtension
 
             new TwigFilter('typo', [$this, 'getTypoFilter']),
 
+            new TwigFilter('truncate', [StringUtil::class, 'safeTruncate']),
+            new TwigFilter('truncate_html', [StringUtil::class, 'safeTruncateHtml']),
+
             # Arrays
             new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
+            new TwigFilter('array_unique', 'array_unique'),
 
             # Hash
             new TwigFilter('sha1', array($this, 'sha1Filter')),
@@ -58,6 +63,10 @@ class StupidExtension extends AbstractExtension
             new TwigFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
             new TwigFilter('array', [$this, 'arrayFilter']),
 
+            // System
+            new TwigFilter('basename', 'basename'),
+            new TwigFilter('dirname', 'dirname'),
+            new TwigFilter('print_r', 'print_r'),
         ];
     }
 

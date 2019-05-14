@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a506e5ae807b528a987c0fb29fa6e37b",
+    "content-hash": "43be8a612963f290c296fc4990c83c35",
     "packages": [
+        {
+            "name": "antoligy/dom-string-iterators",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/antoligy/dom-string-iterators.git",
+                "reference": "fae88f66e1970d68c5585fc42db44f1217bf74e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/antoligy/dom-string-iterators/zipball/fae88f66e1970d68c5585fc42db44f1217bf74e6",
+                "reference": "fae88f66e1970d68c5585fc42db44f1217bf74e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC0-1.0"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Wilson",
+                    "email": "a@ax.gy"
+                },
+                {
+                    "name": "Kornel Lesinski",
+                    "email": "pornel@pornel.net"
+                },
+                {
+                    "name": "Patrick Galbraith",
+                    "email": "patrick.j.galbraith@gmail.com"
+                }
+            ],
+            "description": "Composer package for DOMWordsIterator and DOMLettersIterator",
+            "time": "2018-02-03T16:01:11+00:00"
+        },
         {
             "name": "cocur/slugify",
             "version": "v3.2",
@@ -4730,6 +4774,7 @@
         "ext-mbstring": "*",
         "ext-curl": "*",
         "ext-memcached": "*",
+        "ext-zlib": "*",
         "ext-json": "*",
         "ext-pdo": "*"
     },
