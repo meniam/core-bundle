@@ -14,60 +14,61 @@
             {% endfor %}
         {% endif %}
         {% if form.vars.tabs is defined %}
-            {% for namespace,tabs in form.vars.tabs %}
-                {% if namespace != 'system' %}
-                    <ul id="{{ namespace }}" class="nav nav-tabs">
-                        {% for tab in tabs %}
-                            <li class="nav-item">
-                                <a id="{{ namespace }}-{{ tab.name }}-tab" class="nav-link{% if loop.first %} active{% endif %}" href="#{{ namespace }}-{{ tab.name }}" data-toggle="tab">{{ tab.label|raw }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endfor %}
+            <div class="super-form-tabs">
+                {% for namespace,tabs in form.vars.tabs %}
+                    {% if namespace != 'system' %}
+                        <ul id="{{ namespace }}" class="nav super-form-tabs-line">
+                            {% for tab in tabs %}
+                                <li>
+                                    <a id="{{ namespace }}-{{ tab.name }}-tab" class="super-form-tabs-link{{ loop.first ? ' active' : '' }}" href="#{{ namespace }}-{{ tab.name }}" data-toggle="tab">{{ tab.label|raw }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
 
-            {% for namespace,tabs in form.vars.tabs %}
-                {% for tab in tabs %}
-                    {% if tab.name == 'header' %}
-                        <div class="tab-content tab-content-bordered" style="padding-bottom: 0">
-                            <div class="tab-pane active header in" style="opacity: 1">
-                                {% for element in tab.elements %}
-                                    {{ form_row(form[element]) }}
-                                {% endfor %}
+                {% for namespace,tabs in form.vars.tabs %}
+                    {% for tab in tabs %}
+                        {% if tab.name == 'header' %}
+                            <div class="super-form-tab-item super-form-tab-header">
+                                <div class="tab-pane active">
+                                    {% for element in tab.elements %}
+                                        {{ form_row(form[element]) }}
+                                    {% endfor %}
+                                </div>
                             </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% for namespace,tabs in form.vars.tabs %}
+                    {% if namespace != 'system' %}
+                        <div class="super-form-tab-item super-form-tab-content">
+                            {% for tab in tabs %}
+                                <div class="tab-pane{{ loop.first ? ' active' : ' fade' }}" id="{{ namespace }}-{{ tab.name }}" role="tabpanel" aria-labelledby="{{ namespace }}-{{ tab.name }}-tab">
+                                    {% for element in tab.elements %}
+                                        {{ form_row(form[element]) }}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
 
-            {% for namespace,tabs in form.vars.tabs %}
-                {% if namespace != 'system' %}
-                    <div class="tab-content tab-content-bordered" style="padding-bottom: 0">
-                        {% for tab in tabs %}
-                            <div class="tab-pane {% if loop.first %}active in{% else %}fade{% endif %}" id="{{ namespace }}-{{ tab.name }}" role="tabpanel" aria-labelledby="{{ namespace }}-{{ tab.name }}-tab">
-                                {% for element in tab.elements %}
-                                    {{ form_row(form[element]) }}
-                                {% endfor %}
+                {% for namespace,tabs in form.vars.tabs %}
+                    {% for tab in tabs %}
+                        {% if tab.name == 'footer' %}
+                            <div class="super-form-tab-item super-form-tab-footer">
+                                <div class="tab-pane active">
+                                    {% for element in tab.elements %}
+                                        {{ form_row(form[element]) }}
+                                    {% endfor %}
+                                </div>
                             </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-            {% for namespace,tabs in form.vars.tabs %}
-                {% for tab in tabs %}
-                    {% if tab.name == 'footer' %}
-                        <div class="tab-content tab-content-bordered" style="padding-bottom: 0;opacity: 1">
-                            <div class="tab-pane active header in">
-                                {% for element in tab.elements %}
-                                    {{ form_row(form[element]) }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-
+            </div>
         {% endif %}
         {{ form_rest(form) }}
     </div>
