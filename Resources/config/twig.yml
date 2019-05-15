@@ -1,8 +1,8 @@
 #twig:
 #  form_themes:
-#    - '@CoreBundle/form/type/bootstrap.html.twig'
-#    - '@CoreBundle/form/type/form_tabs.html.twig'
-#    - '@CoreBundle/form/type/markdown.html.twig'
-#    - '@CoreBundle/form/type/codemirror.html.twig'
-#    - '@CoreBundle/form/type/super_collection.html.twig'
-#    - '@CoreBundle/form/type/fields.html.twig'
+#    - '@Core/form/type/bootstrap.html.twig'
+#    - '@Core/form/type/form_tabs.html.twig'
+#    - '@Core/form/type/markdown.html.twig'
+#    - '@Core/form/type/codemirror.html.twig'
+#    - '@Core/form/type/super_collection.html.twig'
+#    - '@Core/form/type/fields.html.twig'
