@@ -1,4 +1,4 @@
-{% extends '@CoreBundle/form/modal.html.twig' %}
+{% extends '@Core/form/modal.html.twig' %}
 {% block formData %}{% if actions_disabled is not defined or not actions_disabled %}method="post" action="{{ path( route , route_params) }}"{% endif %}{% endblock %}
 
 {% block title %}
