@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SuperCollectionType extends CollectionType
+class SimpleCollectionType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -95,6 +95,6 @@ class SuperCollectionType extends CollectionType
      */
     public function getBlockPrefix()
     {
-        return 'super_collection';
+        return 'simple_collection';
     }
 }

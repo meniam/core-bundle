@@ -10,6 +10,7 @@
         <script>
             $(document).ready(function () {
                 var CodeMirror_{{ id }} = CodeMirror.fromTextArea($('#{{ id }}')[0], {
+                    autoClearEmptyLines: false,
                     {% if codemirror.line_numbers %}
                     lineNumbers: true,
                     {% endif %}

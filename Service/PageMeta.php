@@ -145,31 +145,32 @@ class PageMeta implements HelperInterface
     /**
      * @param        $node
      * @param string $domain
+     * @param array  $parameters
      * @return PageMeta
      */
-    public function init($node, $domain = 'messages')
+    public function init($node, $domain = 'messages', $parameters = [])
     {
         $this->setNode($node);
         $catalogue = $this->translator->getCatalogue();
 
         if ($catalogue->has($node.'.meta_title', $domain)) {
-            $this->setMetaTitleTrans($node.'.meta_title', [], $domain);
+            $this->setMetaTitleTrans($node.'.meta_title', $parameters, $domain);
         }
 
         if ($catalogue->has($node.'.meta_description', $domain)) {
-            $this->setMetaDescriptionTrans($node.'.meta_description', [], $domain);
+            $this->setMetaDescriptionTrans($node.'.meta_description', $parameters, $domain);
         }
 
         if ($catalogue->has($node.'.meta_keywords', $domain)) {
-            $this->setMetaKeywordsTrans($node.'.meta_keywords', [], $domain);
+            $this->setMetaKeywordsTrans($node.'.meta_keywords', $parameters, $domain);
         }
 
         if ($catalogue->has($node.'.meta_robots', $domain)) {
-            $this->setMetaRobotsTrans($node.'.meta_robots', [], $domain);
+            $this->setMetaRobotsTrans($node.'.meta_robots', $parameters, $domain);
         }
 
         if ($catalogue->has($node.'.h1', $domain)) {
-            $this->setH1Trans($node.'.h1', [], $domain);
+            $this->setH1Trans($node.'.h1', $parameters, $domain);
         }
 
         return $this;

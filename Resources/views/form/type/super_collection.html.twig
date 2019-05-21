@@ -1,13 +1,13 @@
 {% block super_collection_label %}
     {% if label %}
-        <div class="dev_subform_name"><span><span>{{ label|raw }}</span></span></div>
+        <div class="super-collection-label"><span><span>{{ label|raw }}</span></span></div>
     {% endif %}
 {% endblock super_collection_label %}
 
 {% block super_collection_row %}
-    <div class="super_collection_row_wrap">
+    <div class="super-collection-row-wrap">
         {{ form_label(form) }}
-        <div class="super_collection_row{% if form.vars.label == false %} super_collection_without_label{% endif %}">
+        <div class="super-collection-row{% if form.vars.label == false %} super-collection-without-label{% endif %}">
             {{ block('form_input_group') }}
             {{ block('form_help') }}
             {{ form_errors(form) }}
@@ -15,43 +15,86 @@
     </div>
 {% endblock super_collection_row %}
 
+{% block super_collection_item %}{% apply spaceless %}
+    {% if id is not defined %}
+        {% set id = '__ID__' %}
+    {% endif %}
+    {{ form_widget(prototype) }}
+    {{ form_errors(prototype) }}
+    {% if prototype.parent.vars.allow_delete %}
+        <div class="row super-collection-del {{ prototype.parent.vars.delete_button_row_class }}">
+            <div class="offset-lg-{{ prototype.parent.vars.button_col }} col-lg-{{ prototype.parent.vars.sub_widget_col  }}">
+                <a href="#" class="btn btn-outline-danger btn-sm super-collection-delete-button" data-removefield="collection" data-field="{{ id }}">{{ prototype.parent.vars.delete_button_text|parse_icons|raw }}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endapply %}{% endblock super_collection_item %}
+
 {% block super_collection_widget %}
     {% apply spaceless %}
         {% if prototype is defined %}
-            {% set prototype_vars = {} %}
-            {% if style is defined %}
-                {% set prototype_vars = prototype_vars|merge({'style': style}) %}
-            {% endif %}
-            {% set prototype_html = form_widget(prototype, prototype_vars) %}
-            {% if form.vars.allow_delete %}
-                {% set prototype_html = prototype_html ~ '<div class="row super-collection-del '~ form.vars.delete_button_row_class ~ '"><div class="offset-lg-' ~ form.vars.button_col ~ ' col-lg-' ~  form.vars.sub_widget_col ~ '"><a href="#" class="btn btn-outline-danger btn-sm super-collection-delete-button" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|parse_icons|raw ~ '</a></div></div' %}
-            {% endif %}
-            {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+            {% set attr = attr|merge({'data-prototype': block('super_collection_item') }) %}
             {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
         {% endif %}
         <div {{ block('widget_container_attributes') }}>
-            <ul class="super-collection list-unstyled">
+            <ul class="super-collection">
                 {% for field in form %}
-                    <li {% if form.vars.full_width is defined and form.vars.full_width %}style="margin: 0 -15px;"{% endif %}>
-                        {{ form_widget(field) }}
-                        {{ form_errors(field) }}
-                        {% if form.vars.allow_delete %}
-                            <div class="row super-collection-del {{ form.vars.delete_button_row_class }}">
-                                <div class="offset-lg-{{ form.vars.button_col }} col-lg-{{ form.vars.sub_widget_col  }}">
-                                    <a href="#" class="btn btn-outline-danger btn-sm super-collection-delete-button" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|parse_icons|raw }}</a>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </li>
+                <li {% if prototype.vars.full_width is defined and prototype.vars.full_width %}style="margin: 0 -15px;"{% endif %}>
+
+                    {% with {'prototype': field, 'id': field.vars.id} %}
+                        {{ block('super_collection_item') }}
+                    {% endwith %}
+                </li>
                 {% endfor %}
             </ul>
             {% if form.vars.allow_add %}
-                <div class="row super-collection-add {{ form.vars.add_button_row_class }}">
-                    <div class="offset-lg-{{ form.vars.button_col }} col-lg-{{ form.vars.sub_widget_col  }}">
-                        <a href="#" class="btn btn-outline-success btn-sm super-collection-add-button" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|parse_icons|raw }}</a>
+                <div class="super-collection-add {{ form.vars.add_button_row_class }}">
+                    <div class="row">
+                        <div class="offset-lg-{{ form.vars.button_col }} col-lg-{{ form.vars.sub_widget_col  }}">
+                            <a href="#" class="btn btn-outline-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|parse_icons|raw }}</a>
+                        </div>
                     </div>
                 </div>
             {% endif %}
         </div>
     {% endapply %}
 {% endblock super_collection_widget %}
+
+{# #####################################################################################################################
+# SIMPLE COLLECTION
+##################################################################################################################### #}
+{#{% block simple_collection_row %}#}
+{#    {{ form_label(form) }}#}
+{#    {{ form_widget(form) }}#}
+{#    {{ form_help(form) }}#}
+{#    {{ form_errors(form) }}#}
+{#{% endblock %}#}
+
+{% block simple_collection_widget %}{% apply spaceless %}
+        {% if prototype is defined %}
+            {% set prototype_vars = {} %}
+            {% if style is defined %}
+                {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+            {% endif %}
+            {% set prototype_html = form_widget(prototype, prototype_vars) %}
+            {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+            {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="simple-collection list-unstyled">
+                {% if form | length %}
+                {% for field in form %}
+                    <li {% if form.vars.full_width is defined and form.vars.full_width %}style="margin: 0 -15px;"{% endif %}>
+                        {{ form_widget(field) }}
+                        {{ form_errors(field) }}
+                    </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            {% if form.vars.allow_add %}
+                <div class="super-collection-add {{ form.vars.add_button_row_class }}">
+                        <a href="#" class="btn btn-outline-success" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|parse_icons|raw }}</a>
+                </div>
+            {% endif %}
+        </div>
+{% endapply %}{% endblock simple_collection_widget %}

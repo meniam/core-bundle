@@ -34,7 +34,7 @@ class MarkdownNode extends Node implements NodeOutputInterface
             ->write('$lines = explode("\n", $content);' . PHP_EOL)
             ->write('$content = preg_replace(\'/^\' . $matches[0]. \'/\', "", $lines);' . PHP_EOL)
             ->write('$content = join("\n", $content);' . PHP_EOL)
-            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->>markdown($body);' . PHP_EOL);
+            ->write('echo $this->env->getExtension(\'Meniam\\Bundle\\CoreBundle\\Twig\Extension\\StupidExtension\')->markdown($content);' . PHP_EOL);
 
     }
 }

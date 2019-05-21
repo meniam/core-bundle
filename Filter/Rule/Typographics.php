@@ -2,10 +2,9 @@
 
 namespace Meniam\Bundle\CoreBundle\Filter\Rule;
 
-use Meniam\Bundle\CoreBundle\Filter\FilterRule;
 use TypographBundle\EMT\EMTypograph;
 
-class Typographics extends FilterRule
+class Typographics extends Trim
 {
     private static $typo;
 
@@ -13,7 +12,12 @@ class Typographics extends FilterRule
     {
         $options = [
             'OptAlign.all' => false,
-            'OptAlign.layout' => 'css'
+            'OptAlign.layout' => 'css',
+            'Text.paragraphs' => false,
+            'Text.auto_links' => false,
+            'Text.email' => false,
+            'Text.breakline' => false,
+            'Text.no_repeat_words' => false
         ];
 
         return self::getTypo()->fast_apply($value, $options);

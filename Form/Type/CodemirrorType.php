@@ -18,9 +18,9 @@ class CodemirrorType extends AbstractType
     {
         $resolver->setDefaults(array(
             'required' => false,
-            'label_attr' => [
-                'class' => 'left'
-            ],
+//            'label_attr' => [
+//                'class' => 'left'
+//            ],
             'codemirror' => [
                 'mode' => 'text/html',
                 'match_tags' => true,
