@@ -15,17 +15,25 @@
         {% endif %}
         {% if form.vars.tabs is defined %}
             <div class="super-form-tabs">
+                {% set tab_count = 0 %}
                 {% for namespace,tabs in form.vars.tabs %}
                     {% if namespace != 'system' %}
-                        <ul id="{{ namespace }}" class="nav super-form-tabs-line">
-                            {% for tab in tabs %}
-                                <li>
-                                    <a id="{{ namespace }}-{{ tab.name }}-tab" class="super-form-tabs-link{{ loop.first ? ' active' : '' }}" href="#{{ namespace }}-{{ tab.name }}" data-toggle="tab">{{ tab.label|raw }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                        {% set tab_count = tab_count + 1 %}
                     {% endif %}
                 {% endfor %}
+                {% if tab_count > 1 %}
+                    {% for namespace,tabs in form.vars.tabs %}
+                        {% if namespace != 'system' %}
+                            <ul id="{{ namespace }}" class="nav super-form-tabs-line">
+                                {% for tab in tabs %}
+                                    <li>
+                                        <a id="{{ namespace }}-{{ tab.name }}-tab" class="super-form-tabs-link{{ loop.first ? ' active' : '' }}" href="#{{ namespace }}-{{ tab.name }}" data-toggle="tab">{{ tab.label|raw }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
 
                 {% for namespace,tabs in form.vars.tabs %}
                     {% for tab in tabs %}
