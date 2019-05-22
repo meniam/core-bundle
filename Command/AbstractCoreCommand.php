@@ -153,12 +153,15 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
         $this->getLogger()->info('Finished command: ' . $commandName);
     }
 
+    protected function getMemoryUsage()
+    {
+        return round((memory_get_usage() / 1024 / 1024), 2) . 'Mb';
+    }
 
     protected function logMemoryUsage()
     {
-        $this->getLogger()->info('<info>MEMORY USAGE:</info> <fg=white;options=bold>' . round((memory_get_usage() / 1024 / 1024), 2) . 'Mb</>');
+        $this->getLogger()->info('<info>MEMORY USAGE:</info> <fg=white;options=bold>' . $this->getMemoryUsage() . 'Mb</>');
     }
-
 
     protected function saveReport($type, array $report = [])
     {

@@ -102,6 +102,14 @@ class StupidExtension extends AbstractExtension
 
             new TwigFunction('get_cookie', [$this, 'getCookie']),
 
+            new TwigFunction('static_var', function ($name) {
+                list($class, $property) = explode('::', $name, 2);
+                if (property_exists($class, $property)) {
+                    return $class::$$property;
+                }
+                return null;
+            }),
+
             # Hash and decodes
             new TwigFunction('sha1',          [$this, 'sha1']),
             new TwigFunction('md5',           [$this, 'md5']),
