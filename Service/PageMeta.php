@@ -33,6 +33,7 @@ class PageMeta implements HelperInterface
     private $metaDescription = '';
     private $metaKeywords = '';
     private $metaRobots = 'INDEX, FOLLOW';
+    private $iconClass = '';
     private $h1 = '';
     private $breadcrumbs;
     private $canonical = '';
@@ -143,6 +144,43 @@ class PageMeta implements HelperInterface
     }
 
     /**
+     * @return string
+     */
+    public function getIconClass(): string
+    {
+        return $this->iconClass;
+    }
+
+    /**
+     * @param string $iconClass
+     * @return PageMeta
+     */
+    public function setIconClass(string $iconClass): PageMeta
+    {
+        $this->iconClass = $iconClass;
+        return $this;
+    }
+
+    /**
+     * @param string $h1
+     * @param array  $parameters
+     * @param string $domain
+     * @return PageMeta
+     */
+    public function setIconClassTrans($h1, $parameters = [], $domain = 'messages')
+    {
+        $this->iconClass = $this->translator->trans($h1, $parameters, $domain);
+        return $this;
+    }
+
+
+    public function getIconTag($withNbsp = true)
+    {
+        if (!$class = $this->getIconClass()) return '';
+        return "<i class=\"{$class}\"></i>" . ($withNbsp ? '&nbsp;' : '');
+    }
+
+    /**
      * @param        $node
      * @param string $domain
      * @param array  $parameters
@@ -171,6 +209,10 @@ class PageMeta implements HelperInterface
 
         if ($catalogue->has($node.'.h1', $domain)) {
             $this->setH1Trans($node.'.h1', $parameters, $domain);
+        }
+
+        if ($catalogue->has($node.'.icon_class', $domain)) {
+            $this->setIconClassTrans($node.'.icon_class', $parameters, $domain);
         }
 
         return $this;

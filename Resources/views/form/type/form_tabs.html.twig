@@ -18,7 +18,9 @@
                 {% set tab_count = 0 %}
                 {% for namespace,tabs in form.vars.tabs %}
                     {% if namespace != 'system' %}
-                        {% set tab_count = tab_count + 1 %}
+                        {% for tab in tabs %}
+                            {% set tab_count = tab_count + 1 %}
+                        {% endfor %}
                     {% endif %}
                 {% endfor %}
                 {% if tab_count > 1 %}
