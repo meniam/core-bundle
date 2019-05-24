@@ -7,9 +7,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class User implements Serializable, UserInterface
 {
-    const ROLE_ROOT = 'ROLE_ROOT';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-    const ROLE_USER = 'ROLE_USER';
-    const ROLE_DEVELOPER = 'ROLE_DEVELOPER';
-    const ROLE_RUBRIC_EDITOR = 'ROLE_RUBRIC_EDITOR';
+    const ROLE_ROOT          = 'ROLE_ROOT';        // Круче только бог, его права даже не проверяются
+    const ROLE_SUPER_ADMIN   = 'ROLE_SUPER_ADMIN'; // Роль супервайзера, владелец, но не разработчик, есть все права, кроме тех что нужны прогерам
+    const ROLE_ADMIN         = 'ROLE_ADMIN';       // Администратор обычный, права минимальные
+    const ROLE_EMPLOYEE      = 'ROLE_EMPLOYEE';    // Роль сотрудника без доступа в админку
+    const ROLE_USER          = 'ROLE_USER';        // Пользователь сайта
 }
