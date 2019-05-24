@@ -63,8 +63,3 @@ services:
   Meniam\Bundle\CoreBundle\Form\Bootstrap\Extension\InputGroupButtonExtension:
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
-
-  Meniam\Bundle\CoreBundle\Form\Bootstrap\Extension\PlaintextControlExtension:
-    tags:
-      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
