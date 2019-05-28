@@ -2,6 +2,10 @@
 
 namespace Meniam\Bundle\CoreBundle\Util;
 
+use DateTime;
+use DateTimeZone;
+use Exception;
+
 class DateUtil
 {
     private static $dateReplaces = [
@@ -57,5 +61,14 @@ class DateUtil
         }
 
         return $date;
+    }
+
+    public static function dateTime($time='now', DateTimeZone $timezone=null)
+    {
+        try {
+            return new DateTime($time, $timezone);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }
