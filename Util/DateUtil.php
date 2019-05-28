@@ -5,7 +5,6 @@ namespace Meniam\Bundle\CoreBundle\Util;
 use DateTime;
 use DateTimeZone;
 use Exception;
-use Ramsey\Uuid\Uuid;
 
 class DateUtil
 {
@@ -70,15 +69,6 @@ class DateUtil
             return new DateTime($time, $timezone);
         } catch (Exception $e) {
             return null;
-        }
-    }
-
-    public static function uuid4()
-    {
-        try {
-            return strval(Uuid::uuid4());
-        } catch (Exception $e) {
-            return '';
         }
     }
 }

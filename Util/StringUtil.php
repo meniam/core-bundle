@@ -8,6 +8,8 @@ use \DOMLettersIterator;
 use \DOMNode;
 use \DOMText;
 use \DOMWordsIterator;
+use Ramsey\Uuid\Uuid;
+use Exception;
 
 class StringUtil
 {
@@ -318,4 +320,13 @@ class StringUtil
         }
     }
 
+
+    public static function uuid4()
+    {
+        try {
+            return strval(Uuid::uuid4());
+        } catch (Exception $e) {
+            return '';
+        }
+    }
 }
