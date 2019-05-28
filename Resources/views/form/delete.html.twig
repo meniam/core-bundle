@@ -1,17 +1,24 @@
-{% extends '@Core/form/modal.html.twig' %}
-{% block formData %}{% if actions_disabled is not defined or not actions_disabled %}method="post" action="{{ path( route , route_params) }}"{% endif %}{% endblock %}
+{% if (isXmlHttpRequest is defined) and isXmlHttpRequest is same as(false) and standaloneTemplate is defined %}
+    {% set extends_template = standaloneTemplate %}
+{% else %}
+    {% set extends_template = '@Core/form/modal.html.twig' %}
+{% endif %}
 
-{% block title %}
+{% extends extends_template %}
+
+{% block modal_form_data %}{% if actions_disabled is not defined or not actions_disabled %}method="post" action="{{ path( route , route_params) }}"{% endif %}{% endblock %}
+
+{% block modal_header_title %}
     {% if actions_disabled is defined and actions_disabled %}
         {{ title | default('Удаление записи запрещено') }}
     {% else %}
         {{ title | default('Подтвердите удаление') }}
     {% endif %}
 {% endblock %}
-{% block body %}
+{% block modal_body_content %}
     <div>{{ message | default('Вы действительно желаете удалить запись?') }}</div>
 {% endblock %}
-{% block buttons %}
+{% block modal_footer_buttons %}
     {% if actions_disabled is defined and actions_disabled %}
         <span class="btn btn-success" data-dismiss="modal">Всё понятно</span>
     {% else %}
