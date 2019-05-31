@@ -342,7 +342,7 @@
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
 
-        {% if style == 'horizontal' %}
+        {% if style == 'horizontal' or style == 'fullwidth' %}
             {% set append_class = '' %}
             {% if size in ['small', 'sm'] %}
                 {% set append_class = ' col-form-label-sm' %}
@@ -395,8 +395,8 @@
 
         {% set is_horizontal = style == 'horizontal' or style == 'fullwidth' %}
 
-        <div class="form-group{{ is_horizontal ? ' form-row' : '' }}{% if is_errors %} has-error{% endif %}{% if attr.no_bottom_margin is defined and attr.no_bottom_margin %} form-row-no-bottom-margin{% endif %}{% if style == 'fullwidth' %} form-row-fullwidth{% endif %}">
-            {% if style == 'horizontal' or style == 'fullwidth' %}
+        <div class="form-group{{ is_horizontal ? ' form-row' : '' }}{% if is_errors %} has-error{% endif %}{% if attr.no_bottom_margin is defined and attr.no_bottom_margin %} form-row-no-bottom-margin{% endif %}{% if style == 'fullwidth' %} form-row-fullwidth{% endif %}{% if style == 'fullframe' %} form-row-fullframe{% endif %}">
+            {% if style == 'horizontal' or style == 'fullwidth' or style == 'fullframe' %}
                 {{ form_label(form) }}
                 <div class="col{{ col_size ? ('-' ~ col_size) : '' }}-{{ widget_col }}{% if attr.widget_class is defined and attr.widget_class is not empty %} {{ attr.widget_class }}{% endif %}">
                     {{ block('form_input_group') }}
