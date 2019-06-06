@@ -162,7 +162,7 @@
         <div class="form-group form-row{% if form.vars.errors|length > 0 %} has-error{% endif %}">
         <div class="{{ class }}">
     {% elseif no_form_group is not defined or no_form_group == false %}
-        <div class="form-group form-row{% if form.vars.errors|length > 0 %} has-error{% endif %}">
+        <div class="form-group{% if form.vars.errors|length > 0 %} has-error{% endif %}">
     {% endif %}
 
     {% set checkboxdata %}
