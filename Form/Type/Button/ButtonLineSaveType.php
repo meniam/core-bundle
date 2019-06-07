@@ -14,7 +14,7 @@ class ButtonLineSaveType extends SubmitType
     {
         $resolver->setDefaults(
             [
-                'label' => 'button.save_and_return_labeled',
+                'label' => 'button.save_labeled',
                 'button_class' => 'success',
                 'attr' => [
                     'icon' => 'save',
