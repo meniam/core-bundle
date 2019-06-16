@@ -899,7 +899,6 @@ class PageMeta implements HelperInterface
         return trim($result);
     }
 
-
     public function addHeaderMeta(array $params = [])
     {
         if (empty($params)) return $this;
@@ -913,9 +912,9 @@ class PageMeta implements HelperInterface
     public function getHeaderMetasAsHtml()
     {
         $result = '';
-        foreach ($this->links as $link) {
+        foreach ($this->headerMetas as $meta) {
             $result .= "<meta";
-            foreach ($link['params'] as $k => $v) {
+            foreach ($meta as $k => $v) {
                 $result .= " {$k}=\"{$v}\"";
             }
             $result .= " />\n";
@@ -923,5 +922,4 @@ class PageMeta implements HelperInterface
 
         return trim($result);
     }
-
 }
