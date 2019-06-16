@@ -123,9 +123,8 @@ class PageMetaExtension extends AbstractExtension
 
     public function addHeaderMeta($params)
     {
-        return $this->pageMeta->addHeaderMeta($params);
+        $this->pageMeta->addHeaderMeta($params);
     }
-
 
     public function stylesShow($group)
     {
