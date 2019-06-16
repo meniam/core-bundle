@@ -37,6 +37,9 @@ class PageMetaExtension extends AbstractExtension
             new TwigFunction('page_meta_javascript_show', array($this, 'javascriptShow'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_style_show', array($this, 'stylesShow'), ['is_safe' => ['html']]),
             new TwigFunction('page_meta_get_from_storage', array($this, 'getFromStorage'), ['is_safe' => ['html']]),
+
+            new TwigFunction('page_meta_add_header_meta', array($this, 'addHeaderMeta'), ['is_safe' => ['html']]),
+
         ];
     }
 
@@ -117,6 +120,12 @@ class PageMetaExtension extends AbstractExtension
 
         return $result;
     }
+
+    public function addHeaderMeta($params)
+    {
+        return $this->pageMeta->addHeaderMeta($params);
+    }
+
 
     public function stylesShow($group)
     {

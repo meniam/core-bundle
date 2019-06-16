@@ -44,6 +44,7 @@ class PageMeta implements HelperInterface
     private $javascripts = [];
 
     private $links = [];
+    private $headerMetas = [];
 
     /**
      * @var AuthorizationChecker
@@ -897,4 +898,30 @@ class PageMeta implements HelperInterface
 
         return trim($result);
     }
+
+
+    public function addHeaderMeta(array $params = [])
+    {
+        if (empty($params)) return $this;
+        array_multisort($params);
+        $hash = md5(json_encode($params));
+
+        $this->headerMetas[$hash] = $params;
+        return $this;
+    }
+
+    public function getHeaderMetasAsHtml()
+    {
+        $result = '';
+        foreach ($this->links as $link) {
+            $result .= "<meta";
+            foreach ($link['params'] as $k => $v) {
+                $result .= " {$k}=\"{$v}\"";
+            }
+            $result .= " />\n";
+        }
+
+        return trim($result);
+    }
+
 }
