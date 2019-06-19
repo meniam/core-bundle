@@ -3,6 +3,8 @@ node_modules
 vendor
 vendor-web
 .sass-cache
+composer.lock
+symfony.lock
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
