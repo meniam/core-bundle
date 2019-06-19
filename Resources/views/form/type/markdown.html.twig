@@ -9,7 +9,8 @@
                     element: document.getElementById("{{ form.vars.id }}"),
                     spellChecker: false,
 
-                    lineWrapping: false,
+                    forceSync: true,
+                    lineWrapping: true,
                     autosave: {
                         enabled: true,
                         uniqueId: "{{ form.vars.id }}",

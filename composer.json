@@ -54,7 +54,7 @@
         "meniam/autotext": "^4.0",
         "guzzlehttp/guzzle": "~5.3.1|~6.0",
         "guzzlehttp/psr7": "^1.4",
-        "league/commonmark": "^0.19.1",
+        "league/commonmark": "^1.0.0-beta4",
         "league/commonmark-extras": "^0.4.0",
         "league/commonmark-ext-inlines-only": "^0.2.0",
         "tgalopin/html-sanitizer": "^1.2",
