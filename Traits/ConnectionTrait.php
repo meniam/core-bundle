@@ -182,7 +182,15 @@ trait ConnectionTrait
     public function fetchPairs($query, array $params = [], $types = [], $isSlave = false)
     {
         $query = $this->executeQuery($query, $params, $types, $isSlave);
-        return $query ? $query->fetchAll(PDO::FETCH_KEY_PAIR) : false;
+        if ($data = $query->fetch()) {
+
+            $result = [];
+            foreach ($result as $item) {
+                $result[$item[0]] = $item[1];
+            }
+        }
+
+        return false;
     }
 
     /**
