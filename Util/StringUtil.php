@@ -22,6 +22,16 @@ class StringUtil
         return $str;
     }
 
+    public static function lower($str, $encoding = 'UTF-8')
+    {
+        return mb_strtolower($str, $encoding);
+    }
+
+    public static function upper($str, $encoding = 'UTF-8')
+    {
+        return mb_strtoupper($str, $encoding);
+    }
+
     public static function ucfirst($str, $encoding = 'UTF-8')
     {
         return mb_strtoupper(mb_substr($str, 0, 1, $encoding)) . mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
