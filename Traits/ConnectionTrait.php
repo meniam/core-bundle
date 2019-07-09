@@ -81,7 +81,8 @@ trait ConnectionTrait
      */
     public function getConnSlave()
     {
-        return $this->getDoctrineManager()->getConnection('slave');
+        return $this->getConn();
+        //return $this->getDoctrineManager()->getConnection('slave');
     }
 
     /**
