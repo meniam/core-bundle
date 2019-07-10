@@ -345,4 +345,14 @@ trait ConnectionTrait
 
         return [$sql, $params];
     }
+
+    public function checkConnection($isSlave = false)
+    {
+        $connection= $isSlave ? $this->getConnSlave() : $this->getConn();
+
+        if ($connection->ping() === false) {
+            $connection->close();
+            $connection->connect();
+        }
+    }
 }
