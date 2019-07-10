@@ -200,6 +200,52 @@ trait ConnectionTrait
     }
 
     /**
+     * Альтернативный метод выбора уникальныйх ID, уникальность соблюдается за счет ключа массива
+     *
+     * @param string $query  The SQL query to execute.
+     * @param array  $params The parameters to bind to the query, if any.
+     * @param array  $types  The types the previous parameters are in.
+     * @param bool   $isSlave
+     * @return array|Statement|false The executed statement.
+     */
+    public function fetchUniqIds($query, array $params = [], $types = [], $isSlave = false)
+    {
+        $query = $this->executeQuery($query, $params, $types, $isSlave);
+        if ($query && ($data = $query->fetchAll(FetchMode::NUMERIC))) {
+            $result = [];
+            foreach ($data as $item) {
+                $result[$item[0]] = $item[0];
+            }
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * Выбор первой колонки в виде простого массива
+     *
+     * @param string $query  The SQL query to execute.
+     * @param array  $params The parameters to bind to the query, if any.
+     * @param array  $types  The types the previous parameters are in.
+     * @param bool   $isSlave
+     * @return array|Statement|false The executed statement.
+     */
+    public function fetchFirstColumn($query, array $params = [], $types = [], $isSlave = false)
+    {
+        $query = $this->executeQuery($query, $params, $types, $isSlave);
+        if ($query && ($data = $query->fetchAll(FetchMode::NUMERIC))) {
+            $result = [];
+            foreach ($data as $item) {
+                $result[] = $item[0];
+            }
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
      * Executes an, optionally parametrized, SQL query.
      * If the query is parametrized, a prepared statement is used.
      * If an SQLLogger is configured, the execution is logged.
