@@ -2,6 +2,7 @@
 
 namespace Meniam\Bundle\CoreBundle\Traits;
 
+use InvalidArgumentException;
 use \PDO;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
@@ -81,8 +82,12 @@ trait ConnectionTrait
      */
     public function getConnSlave()
     {
-        return $this->getConn();
-        //  return $this->getDoctrineManager()->getConnection('slave');
+        try {
+            return $this->getDoctrineManager()->getConnection('slave');
+        } catch (InvalidArgumentException $e) {
+            return $this->getConn();
+        }
+
     }
 
     /**
