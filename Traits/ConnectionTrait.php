@@ -183,7 +183,7 @@ trait ConnectionTrait
     public function fetchPairs($query, array $params = [], $types = [], $isSlave = false)
     {
         $query = $this->executeQuery($query, $params, $types, $isSlave);
-        if ($data = $query->fetchAll(FetchMode::NUMERIC)) {
+        if ($query && ($data = $query->fetchAll(FetchMode::NUMERIC))) {
             $result = [];
             foreach ($data as $item) {
                 $result[$item[0]] = $item[1];
