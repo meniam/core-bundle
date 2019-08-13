@@ -2,6 +2,7 @@
 
 namespace Meniam\Bundle\CoreBundle\Service;
 
+use ErrorException;
 use \Exception;
 use \Memcached;
 use Symfony\Component\Cache\Adapter\MemcachedAdapter;
@@ -21,30 +22,36 @@ class MemcacheService extends AbstractCoreService
      */
     private $transactionCachedIds = [];
 
-//    /** @var MemcachedCache */
-//    private $client;
-
     /**
-     * @var \Memcached
+     * @var Memcached
      */
     private $memcached;
 
-//    /**
-//     * @return MemcachedCache
-//     * @throws \ErrorException
-//     */
-//    private function getClient()
-//    {
-//        if ($this->client) return $this->client;
-//        $this->client = new MemcachedCache($this->getMemcachedAdapter());
-//        return $this->client;
-//    }
+    private $prefix;
 
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * @return Memcached
+     * @throws ErrorException
+     */
     private function getMemcachedAdapter()
     {
         if ($this->memcached) return $this->memcached;
+
+        $options = [];
+        if ($this->prefix) {
+            $options = [
+                Memcached::OPT_PREFIX_KEY => $this->prefix
+            ];
+        }
+
         $this->memcached = MemcachedAdapter::createConnection(
-            'memcached://memcached-server'
+            'memcached://memcached-server',
+            $options
         );
         return $this->memcached;
     }
@@ -187,7 +194,7 @@ class MemcacheService extends AbstractCoreService
 
     /**
      * @param array $keys
-     * @return bool
+     * @return bool|array
      */
     public function deleteMultiple(array $keys)
     {
