@@ -34,25 +34,35 @@ class MemcacheService extends AbstractCoreService
         $this->prefix = $prefix;
     }
 
+    protected function getPrefixStoreKey()
+    {
+        return $this->prefix.'prefix_store';
+    }
+
     /**
+     * @param bool $renewStoreKey
      * @return Memcached
      * @throws ErrorException
      */
-    private function getMemcachedAdapter()
+    private function getMemcachedAdapter($renewStoreKey = false)
     {
-        if ($this->memcached) return $this->memcached;
+        if ($this->memcached && !$renewStoreKey) return $this->memcached;
 
         $options = [];
-        if ($this->prefix) {
-            $options = [
-                Memcached::OPT_PREFIX_KEY => $this->prefix
-            ];
-        }
-
         $this->memcached = MemcachedAdapter::createConnection(
             'memcached://memcached-server',
             $options
         );
+
+        if ($this->prefix) {
+            $prefixStoreKey = $this->getPrefixStoreKey();
+            if (!($prefix = $this->get($prefixStoreKey)) || $renewStoreKey) {
+                $prefix = $this->prefix.mt_rand(1, 100000).'_';
+                $this->set($prefixStoreKey, $prefix, 365*86400);
+            }
+            $this->memcached->setOption(Memcached::OPT_PREFIX_KEY, $prefix);
+        }
+
         return $this->memcached;
     }
 
@@ -202,6 +212,16 @@ class MemcacheService extends AbstractCoreService
             return $this->getMemcachedAdapter()->deleteMulti($keys);
         } catch (Exception $e) {
             $this->getLogger()->error("Memcached deleteMultiple failed", ['keys' => $keys, 'e' => $e]);
+            return false;
+        }
+    }
+
+    public function deletePrefix($prefix)
+    {
+        try {
+            $this->getMemcachedAdapter(true);
+        } catch (Exception $e) {
+            $this->getLogger()->error("Delete Prefix Key Failed", ['e' => $e]);
             return false;
         }
     }
