@@ -330,6 +330,54 @@ class StringUtil
         }
     }
 
+    /**
+     * @param $path
+     * @param $sect
+     * @return mixed|null
+     */
+    public static function getPathSect($path, $sect)
+    {
+        $trimmedPath = trim($path, '/');
+        $pathArray =  explode('/', $trimmedPath);
+
+        if (!$cnt = count($pathArray)) {
+            return null;
+        }
+
+        if ($sect < 0) {
+            $cnt = $cnt + $sect;
+        }
+
+        return isset($pathArray[$cnt]) ? $pathArray[$cnt] : null;
+    }
+
+    /**
+     * @param $path
+     * @param $sect
+     * @return mixed|null
+     */
+    public static function removePathSect($path, $sect)
+    {
+        $trimmedPath = trim($path, '/');
+        $pathArray =  explode('/', $trimmedPath);
+
+        if (!$cnt = count($pathArray)) {
+            return '';
+        }
+
+        if ($sect < 0) {
+            $cnt = $cnt + $sect;
+        }
+
+        unset($pathArray[$cnt]);
+
+        $result = '';
+        foreach ($pathArray as $slug) {
+            $result .= '/' . $slug;
+        }
+
+        return $result;
+    }
 
     public static function uuid4()
     {
