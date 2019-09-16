@@ -11,7 +11,8 @@ class MarkdownWithHtml extends HtmlSanitize
 
     public function filter($value)
     {
-        return parent::filter($this->getMarkdownParser()->convertToHtml($value));
+        if (!$value) return $value;
+        return parent::filter($this->getMarkdownParser()->convertToHtml((string)$value));
     }
 
     /**
