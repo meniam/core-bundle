@@ -2,6 +2,8 @@
 
 namespace Meniam\Bundle\CoreBundle\Traits;
 
+use Meniam\Bundle\CoreBundle\Service\MemcacheService;
+
 trait CacheTtlTrait
 {
     /**
@@ -33,7 +35,6 @@ trait CacheTtlTrait
 
     protected function isCacheAllowed($cached = true)
     {
-        return ($cached == true);
+        return MemcacheService::$isCacheAllowed && $cached;
     }
-
 }

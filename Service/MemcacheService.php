@@ -29,6 +29,11 @@ class MemcacheService extends AbstractCoreService
 
     private $prefix;
 
+    /**
+     * @var bool
+     */
+    public static $isCacheAllowed = true;
+
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
@@ -224,5 +229,10 @@ class MemcacheService extends AbstractCoreService
             $this->getLogger()->error("Delete Prefix Key Failed", ['e' => $e]);
             return false;
         }
+    }
+
+    public static function setCacheAllowed(bool $state)
+    {
+        self::$isCacheAllowed = $state;
     }
 }
