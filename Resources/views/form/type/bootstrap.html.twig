@@ -155,9 +155,11 @@
 
     {% set class = '' %}
     {% if align_with_widget is defined or attr.align_with_widget is defined %}
-        {% set col_size = (attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size() %}
-        {% set label_col = (attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col() %}
-        {% set widget_col = (attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col() %}
+        {% set col_size = col_size | default((attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size()) %}
+        {% set style = style | default((attr.style is defined and attr.style is not empty) ? attr.style : bootstrap_get_style()) %}
+        {% set label_col = label_col | default((attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col()) %}
+        {% set widget_col = widget_col | default ((attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col()) %}
+
         {% set class = 'col' ~ (col_size ? '-' ~ col_size : '') ~ '-' ~ widget_col ~ ' offset' ~ (col_size ? '-' ~ col_size : '') ~ '-' ~ label_col %}
         <div class="form-group form-row{% if form.vars.errors|length > 0 %} has-error{% endif %}">
         <div class="{{ class }}">
@@ -219,9 +221,9 @@
 
     {% set class = '' %}
     {% if align_with_widget is defined or attr.align_with_widget is defined %}
-        {% set col_size = (attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size() %}
-        {% set label_col = (attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col() %}
-        {% set widget_col = (attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col() %}
+        {% set col_size = col_size | default((attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size()) %}
+        {% set label_col = label_col | default((attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col()) %}
+        {% set widget_col = widget_col | default ((attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col()) %}
         {% set class = 'col' ~ (col_size ? '-' ~ col_size : '') ~ '-' ~ widget_col ~ ' offset' ~ (col_size ? '-' ~ col_size : '') ~ '-' ~ label_col %}
         <div class="form-group form-row {% if form.vars.errors|length > 0 %} has-error{% endif %}">
         <div class="{{ class }}">
@@ -333,9 +335,9 @@
 
 {% block form_label %}{% apply spaceless %}
     {% if label is not same as (false) %}
-        {% set style = (attr.style is defined and attr.style is not empty) ? attr.style : bootstrap_get_style() %}
-        {% set col_size = (attr.col_size is defined and attr.col_size is not empty) ? attr.col_size : bootstrap_get_col_size() %}
-        {% set label_col = (attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col() %}
+        {% set col_size = col_size | default((attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size()) %}
+        {% set style = style | default((attr.style is defined and attr.style is not empty) ? attr.style : bootstrap_get_style()) %}
+        {% set label_col = label_col | default((attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col()) %}
         {% set size = (attr.size is defined and attr.size is not empty) ? attr.size : null %}
 
         {% if not compound %}
@@ -384,10 +386,10 @@
 {% block form_row %}
     {% apply spaceless %}
         {% set is_errors = errors | length %}
-        {% set col_size = (attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size() %}
-        {% set style = (attr.style is defined and attr.style is not empty) ? attr.style : bootstrap_get_style() %}
-        {% set label_col = (attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col() %}
-        {% set widget_col = (attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col() %}
+        {% set col_size = col_size | default((attr.col_size is defined) ? attr.col_size : bootstrap_get_col_size()) %}
+        {% set style = style | default((attr.style is defined and attr.style is not empty) ? attr.style : bootstrap_get_style()) %}
+        {% set label_col = label_col | default((attr.label_col is defined and attr.label_col is not empty) ? attr.label_col : bootstrap_get_label_col()) %}
+        {% set widget_col = widget_col | default ((attr.widget_col is defined and attr.widget_col is not empty) ? attr.widget_col : bootstrap_get_widget_col()) %}
 
         {% if label is same as (false) and label_col is defined %}
             {% set widget_col = widget_col + label_col %}
