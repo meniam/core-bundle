@@ -14,15 +14,29 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 trait ValidatorTrait
 {
     /**
+     * @var ValidatorInterface
+     */
+    protected $validatorManager;
+
+    /**
+     * @required
+     * @param ValidatorInterface $validator
+     */
+    public function setValidator(ValidatorInterface $validator)
+    {
+        $this->validatorManager = $validator;
+    }
+
+    /**
      * @return ValidatorInterface
      */
     protected function getValidator()
     {
-        if (!isset($this->container)) {
+        if (!isset($this->validatorManager)) {
             throw new LogicException('ValidatorInterface must be defined');
         }
 
-        return $this->container->get(ValidatorInterface::class);
+        return $this->validatorManager;
     }
 
     /**
