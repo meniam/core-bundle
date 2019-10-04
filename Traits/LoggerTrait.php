@@ -35,6 +35,9 @@ trait LoggerTrait
         return $this->loggerTraitLogger;
     }
 
+    /**
+     * @param LoggerService $loggerService
+     */
     public function setLogger(LoggerService $loggerService)
     {
         $this->loggerTraitLogger = $loggerService;

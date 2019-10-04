@@ -28,7 +28,6 @@ abstract class AbstractCoreController extends AbstractController
     use CacheTrait;
     use ConnectionTrait;
     use PagerTrait;
-    use ValidatorTrait;
 
     public static function getSubscribedServices()
     {

@@ -9,9 +9,7 @@ use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearchId;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
-use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -34,14 +32,12 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
     use ServiceSystemTrait;
     use ConnectionTrait;
     use PagerTrait;
-    use ValidatorTrait;
 
     protected $container;
 
     public static function getSubscribedServices()
     {
         return [
-            LoggerInterface::class,
             LoggerService::class,
             MemcacheService::class,
             EntityManagerInterface::class,
