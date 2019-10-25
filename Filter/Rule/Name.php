@@ -14,7 +14,9 @@ class Name extends FilterRule
         $value = preg_replace('#(\S)\'(s)#si', '\\1\\2', $value);
         $value = preg_replace('#[^\w\d\)\]]+$#usi',' ', $value);
         $value = preg_replace('#\s+#', ' ', $value);
+        $value = FilterStatic::filterValue(trim($value, "\r\n\t,:;(^$ "), Ucfirst::class);
+        $value = preg_replace('#\s+(это|как|так|и|в|над|к|до|не|на|но|за|то|с|ли|а|во|от|со|для|о|же|ну|вы|бы|что|кто|он|для|при|около|она)$#usi', '', $value);
 
-        return FilterStatic::filterValue(trim($value, "\r\n\t,:;(^$ "), Ucfirst::class);
+        return $value;
     }
 }
