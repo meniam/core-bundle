@@ -110,7 +110,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->commit();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL Commit Failed', ['e' => $e->getMessage()]);
+            $this->getLogger()->error('SQL Commit Failed', ['e' => $e->getMessage(), 'exception' => $e]);
         }
     }
 
@@ -122,7 +122,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->rollBack();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL RollBack Failed', ['e' => $e->getMessage()]);
+            $this->getLogger()->error('SQL RollBack Failed', ['e' => $e->getMessage(), 'exception' => $e]);
         }
     }
 
@@ -244,7 +244,7 @@ trait ConnectionTrait
             $message = preg_replace('#VALUES(.*?)ON#usi', '{{VALUES}}', $message);
             $message = preg_replace('#with params\s*\[.*?\]#usi', 'with params [{{PARAMS}}]', $message);
 
-            $this->getLogger()->error('SQL Execute Error', [$message, 'sql' => $query, 'params' => $params, 'types' => $types]);
+            $this->getLogger()->error('SQL Execute Error', ['message' => $message, 'sql' => $query, 'params' => $params, 'types' => $types, 'exception' => $e]);
         }
 
         return $result;
@@ -265,7 +265,7 @@ trait ConnectionTrait
         try {
             $result = $this->getConn()->insert($tableExpression, $data, $types);
         } catch (DBALException $e) {
-            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'types' => $types, 'e' => $e->getMessage()]);
+            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
         }
 
         return $result;
@@ -287,7 +287,7 @@ trait ConnectionTrait
         try {
             $result = $this->getConn()->update($tableExpression, $data, $identifier, $types);
         } catch (DBALException $e) {
-            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'identifier' => $identifier, 'types' => $types, 'e' => $e->getMessage()]);
+            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'identifier' => $identifier, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
         }
 
         return $result;
