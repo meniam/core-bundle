@@ -81,7 +81,10 @@ trait CacheTrait
 
     public static function addToPrefetchOnSet($flag = true)
     {
+        $currentValue = CacheTrait::$addToPrefetchOnSet;
         CacheTrait::$addToPrefetchOnSet = $flag;
+
+        return $currentValue;
     }
 
     public static function clearPrefetchedData()
