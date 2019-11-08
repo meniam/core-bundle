@@ -24,13 +24,12 @@ trait CacheTrait
                 $message = "The {$class} is not registered in your application.";
                 throw new LogicException($message);
             }
-            $this->container->get($class);
+
+            return $this->container->get($class);
         } else {
             $message = "MemcachedService is not registered in your application.";
             throw new LogicException($message);
         }
-
-        return null;
     }
 
     /**
