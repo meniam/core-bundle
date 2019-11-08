@@ -11,6 +11,9 @@ class MemcacheService extends AbstractCoreService
 {
     const MC_DEFAULT = '-1~1982~06~01';
 
+    public static $prefetchCacheData = [];
+    public static $addToPrefetchOnSet = false;
+
     /**
      * Transaction started flag
      * @var bool
@@ -34,6 +37,9 @@ class MemcacheService extends AbstractCoreService
      */
     public static $isCacheAllowed = true;
 
+    /**
+     * @param $prefix
+     */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
@@ -221,16 +227,23 @@ class MemcacheService extends AbstractCoreService
         }
     }
 
-    public function deletePrefix($prefix)
+    /**
+     * @return bool
+     */
+    public function deletePrefix()
     {
         try {
             $this->getMemcachedAdapter(true);
+            return true;
         } catch (Exception $e) {
             $this->getLogger()->error("Delete Prefix Key Failed", ['e' => $e]);
             return false;
         }
     }
 
+    /**
+     * @param bool $state
+     */
     public static function setCacheAllowed(bool $state)
     {
         self::$isCacheAllowed = $state;
