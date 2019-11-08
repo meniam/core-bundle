@@ -13,27 +13,33 @@ use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * @property ContainerInterface $container
- */
 trait ConnectionTrait
 {
     use LoggerTrait;
 
     /**
-     * @var EntityManager|object
+     * @var EntityManagerInterface
      */
-    private $connectionTraitEm;
+    private $connectionTraitManager;
+
+    /**
+     * @var ManagerRegistry
+     */
+    private $connectionTraitDoctrine;
+
+    /**
+     * @var ManagerRegistry
+     */
+    private $connectionTraitConnection;
 
     /**
      * @required
-     * @param EntityManagerInterface $em
+     * @param ManagerRegistry $managerRegistry
      */
-    public function setConnectionTraitEm(EntityManagerInterface $em)
+    public function setConnectionTraitDoctrineManager(ManagerRegistry $managerRegistry)
     {
-        $this->connectionTraitEm = $em;
+        $this->connectionTraitDoctrine = $managerRegistry;
     }
 
     /**
@@ -41,16 +47,10 @@ trait ConnectionTrait
      */
     protected function getEm()
     {
-        if ($this->connectionTraitEm) {
-            return $this->connectionTraitEm;
+        if (!$this->connectionTraitManager) {
+            $this->connectionTraitManager = $this->getDoctrineManager()->getManager();
         }
-
-        if (!$this->container->has(EntityManagerInterface::class)) {
-            throw new LogicException('The EntityManagerInterface is not registered in your application.');
-        }
-
-        $this->connectionTraitEm = $this->container->get(EntityManagerInterface::class);
-        return $this->connectionTraitEm;
+        return $this->connectionTraitManager;
     }
 
     /**
@@ -62,11 +62,7 @@ trait ConnectionTrait
      */
     protected function getDoctrineManager(): ManagerRegistry
     {
-        if (!$this->container->has('doctrine')) {
-            throw new LogicException('The DoctrineBundle is not registered in your application. Try running "composer require symfony/orm-pack".');
-        }
-
-        return $this->container->get('doctrine');
+        return $this->connectionTraitDoctrine;
     }
 
     /**
@@ -74,7 +70,10 @@ trait ConnectionTrait
      */
     public function getConn()
     {
-        return $this->getEm()->getConnection();
+        if (!$this->connectionTraitConnection) {
+            $this->connectionTraitConnection = $this->getDoctrineManager()->getConnection();
+        }
+        return $this->connectionTraitConnection;
     }
 
     /**
@@ -87,7 +86,6 @@ trait ConnectionTrait
         } catch (InvalidArgumentException $e) {
             return $this->getConn();
         }
-
     }
 
     /**
@@ -110,7 +108,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->commit();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL Commit Failed', ['e' => $e->getMessage(), 'exception' => $e]);
+            $this->getLogger()->error('SQL Commit Failed', ['message' => $e->getMessage(), 'exception' => $e]);
         }
     }
 
@@ -122,7 +120,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->rollBack();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL RollBack Failed', ['e' => $e->getMessage(), 'exception' => $e]);
+            $this->getLogger()->error('SQL RollBack Failed', ['message' => $e->getMessage(), 'exception' => $e]);
         }
     }
 

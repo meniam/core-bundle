@@ -26,9 +26,8 @@ trait LoggerTrait
             return $this->loggerTraitLogger;
         }
 
-        if (!$this->container->has(LoggerService::class)) {
+        if (!isset($this->container) || !$this->container->has(LoggerService::class)) {
             throw new LogicException('The LoggerService is not registered in your application.');
-
         }
 
         $this->loggerTraitLogger = $this->container->get(LoggerService::class);
@@ -36,6 +35,7 @@ trait LoggerTrait
     }
 
     /**
+     * @required
      * @param LoggerService $loggerService
      */
     public function setLogger(LoggerService $loggerService)
