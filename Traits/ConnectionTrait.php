@@ -3,6 +3,7 @@
 namespace Meniam\Bundle\CoreBundle\Traits;
 
 use InvalidArgumentException;
+use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use \PDO;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
@@ -16,8 +17,6 @@ use LogicException;
 
 trait ConnectionTrait
 {
-    use LoggerTrait;
-
     /**
      * @var EntityManagerInterface
      */
@@ -32,6 +31,32 @@ trait ConnectionTrait
      * @var ManagerRegistry
      */
     private $connectionTraitConnection;
+
+    /**
+     * @var LoggerService
+     */
+    private $connectionTraitLogger;
+
+    /**
+     * @return LoggerService
+     */
+    public function getConnectionLogger()
+    {
+        if ($this->loggerTraitLogger) {
+            return $this->loggerTraitLogger;
+        }
+
+        return $this->loggerTraitLogger;
+    }
+
+    /**
+     * @required
+     * @param LoggerService $loggerService
+     */
+    public function setConnectionLogger(LoggerService $loggerService)
+    {
+        $this->connectionTraitLogger = $loggerService;
+    }
 
     /**
      * @required
@@ -108,7 +133,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->commit();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL Commit Failed', ['message' => $e->getMessage(), 'exception' => $e]);
+            $this->getConnectionLogger()->error('SQL Commit Failed', ['message' => $e->getMessage(), 'exception' => $e]);
         }
     }
 
@@ -120,7 +145,7 @@ trait ConnectionTrait
         try {
             $this->getConn()->rollBack();
         } catch (ConnectionException $e) {
-            $this->getLogger()->error('SQL RollBack Failed', ['message' => $e->getMessage(), 'exception' => $e]);
+            $this->getConnectionLogger()->error('SQL RollBack Failed', ['message' => $e->getMessage(), 'exception' => $e]);
         }
     }
 
@@ -242,7 +267,7 @@ trait ConnectionTrait
             $message = preg_replace('#VALUES(.*?)ON#usi', '{{VALUES}}', $message);
             $message = preg_replace('#with params\s*\[.*?\]#usi', 'with params [{{PARAMS}}]', $message);
 
-            $this->getLogger()->error('SQL Execute Error', ['message' => $message, 'sql' => $query, 'params' => $params, 'types' => $types, 'exception' => $e]);
+            $this->getConnectionLogger()->error('SQL Execute Error', ['message' => $message, 'sql' => $query, 'params' => $params, 'types' => $types, 'exception' => $e]);
         }
 
         return $result;
@@ -263,7 +288,7 @@ trait ConnectionTrait
         try {
             $result = $this->getConn()->insert($tableExpression, $data, $types);
         } catch (DBALException $e) {
-            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
+            $this->getConnectionLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
         }
 
         return $result;
@@ -285,7 +310,7 @@ trait ConnectionTrait
         try {
             $result = $this->getConn()->update($tableExpression, $data, $identifier, $types);
         } catch (DBALException $e) {
-            $this->getLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'identifier' => $identifier, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
+            $this->getConnectionLogger()->error('SQL Execute Error', ['table' => $tableExpression, 'data' => $data, 'identifier' => $identifier, 'types' => $types, 'e' => $e->getMessage(), 'exception' => $e]);
         }
 
         return $result;
