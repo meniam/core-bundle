@@ -11,6 +11,7 @@ use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
 use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
+use Meniam\Bundle\CoreBundle\Traits\LoggerTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use Meniam\Bundle\CoreBundle\Traits\TranslatorTrait;
@@ -26,6 +27,7 @@ abstract class AbstractCoreController extends AbstractController
     use TranslatorTrait;
     use ServiceSystemTrait;
     use CacheTrait;
+    use LoggerTrait;
     use ConnectionTrait;
     use PagerTrait;
 
@@ -58,11 +60,24 @@ abstract class AbstractCoreController extends AbstractController
         return new JsonResponse(json_encode($data, JSON_UNESCAPED_UNICODE), $status, $headers, true);
     }
 
+    /**
+     * @param string $type
+     * @param string $message
+     * @param null   $params
+     */
     protected function addFlashTrans(string $type, string $message, $params = null)
     {
         $this->addFlash($type, $this->trans($message, $params));
     }
 
+    /**
+     * @param array $replace
+     * @param array $delete
+     * @param null  $route
+     * @param array $parameters
+     * @param int   $referenceType
+     * @return mixed|string|null
+     */
     protected function urlSaveGet($replace = array(), $delete = array(), $route = null, $parameters = array(), $referenceType = Router::ABSOLUTE_PATH)
     {
         return $this->getRequestService()->urlSaveGet($replace, $delete, $route, $parameters, $referenceType);

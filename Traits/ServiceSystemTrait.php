@@ -21,8 +21,6 @@ use Twig\Environment;
  */
 trait ServiceSystemTrait
 {
-    use LoggerTrait;
-
     /**
      * @return User|object|string
      */
@@ -115,7 +113,6 @@ trait ServiceSystemTrait
     {
         if (!$this->container->has($class)) {
             $message = "The {$class} is not registered in your application.";
-            $this->getLogger()->critical($message);
             throw new LogicException($message);
         }
 
