@@ -5,7 +5,7 @@ namespace Meniam\Bundle\CoreBundle\Entity;
 use \Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-abstract class User implements Serializable, UserInterface
+abstract class User implements UserInterface
 {
     const ROLE_ROOT          = 'ROLE_ROOT';        // Круче только бог, его права даже не проверяются
     const ROLE_SUPER_ADMIN   = 'ROLE_SUPER_ADMIN'; // Роль супервайзера, владелец, но не разработчик, есть все права, кроме тех что нужны прогерам
