@@ -18,6 +18,7 @@ use Meniam\Bundle\CoreBundle\Traits\TranslatorTrait;
 use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -81,6 +82,21 @@ abstract class AbstractCoreController extends AbstractController
     protected function urlSaveGet($replace = array(), $delete = array(), $route = null, $parameters = array(), $referenceType = Router::ABSOLUTE_PATH)
     {
         return $this->getRequestService()->urlSaveGet($replace, $delete, $route, $parameters, $referenceType);
+    }
+
+    /**
+     * CreateForm And HandleRequest
+     *
+     * @param string $type
+     * @param null   $data
+     * @param array  $options
+     * @return FormInterface
+     */
+    protected function handleForm(string $type, $data = null, array $options = []): FormInterface
+    {
+        $form = $this->createForm($type, $data, $options);
+        $form->handleRequest($this->getRequest());
+        return $form;
     }
 
     /**
