@@ -33,7 +33,7 @@ trait TranslatorTrait
         return $this->translator->trans("{$one}|{$two}|{$ten}", ['%count%' => $count]);
     }
 
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
     }
