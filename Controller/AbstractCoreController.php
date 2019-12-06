@@ -10,12 +10,11 @@ use Meniam\Bundle\CoreBundle\Service\PageCache;
 use Meniam\Bundle\CoreBundle\Service\PageMeta;
 use Meniam\Bundle\CoreBundle\Service\RequestService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
-use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
+use Meniam\Bundle\CoreBundle\Traits\DbTrait;
 use Meniam\Bundle\CoreBundle\Traits\LoggerTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use Meniam\Bundle\CoreBundle\Traits\TranslatorTrait;
-use Meniam\Bundle\CoreBundle\Traits\ValidatorTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +28,7 @@ abstract class AbstractCoreController extends AbstractController
     use ServiceSystemTrait;
     use CacheTrait;
     use LoggerTrait;
-    use ConnectionTrait;
+    use DbTrait;
     use PagerTrait;
 
     public static function getSubscribedServices()

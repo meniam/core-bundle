@@ -2,14 +2,16 @@
 
 namespace Meniam\Bundle\CoreBundle\Command;
 
+use Exception;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\Slug;
 use Meniam\Bundle\CoreBundle\Service\LoggerService;
 use Meniam\Bundle\CoreBundle\Service\MemcacheService;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
-use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Meniam\Bundle\CoreBundle\Traits\DbTrait;
+use Meniam\Bundle\CoreBundle\Traits\LoggerTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +36,8 @@ use Twig\Environment;
 abstract class AbstractCoreCommand extends Command implements ServiceSubscriberInterface
 {
     use CacheTrait;
-    use ConnectionTrait;
+    use DbTrait;
+    use LoggerTrait;
 
     /**
      * @var ContainerInterface
@@ -96,7 +99,7 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
     protected function getParameter(string $name)
     {
         if (!$this->container->has('parameter_bag')) {
-            throw new ServiceNotFoundException('parameter_bag', null, null, [], sprintf('The "%s::getParameter()" method is missing a parameter bag to work properly. Did you forget to register your controller as a service subscriber? This can be fixed either by using autoconfiguration or by manually wiring a "parameter_bag" in the service locator passed to the controller.', \get_class($this)));
+            throw new ServiceNotFoundException('parameter_bag', null, null, [], sprintf('The "%s::getParameter()" method is missing a parameter bag to work properly. Did you forget to register your controller as a service subscriber? This can be fixed either by using autoconfiguration or by manually wiring a "parameter_bag" in the service locator passed to the controller.', get_class($this)));
         }
 
         return $this->container->get('parameter_bag')->get($name);
@@ -113,7 +116,7 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
 
         try {
             $help->run($input, $output);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->getLogger()->error("Help command failed: " . $e->getMessage());
         }
     }
@@ -142,7 +145,7 @@ abstract class AbstractCoreCommand extends Command implements ServiceSubscriberI
      * @param array           $arguments
      * @param OutputInterface $output
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function runCommand($commandName, array $arguments, OutputInterface $output)
     {
