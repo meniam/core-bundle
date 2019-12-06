@@ -2,6 +2,7 @@
 
 namespace Meniam\Bundle\CoreBundle\Service;
 
+use Exception;
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearch;
@@ -40,6 +41,7 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
         return [
             LoggerService::class,
             MemcacheService::class,
+            DbService::class,
             EntityManagerInterface::class,
             TranslatorInterface::class,
             'validator' => '?'.ValidatorInterface::class,
@@ -84,13 +86,19 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
 
     /**
      * Returns a rendered view.
-     * @param string $view The view name
+     *
+     * @param string $view       The view name
      * @param array  $parameters An array of parameters to pass to the view
      * @return string The rendered view
      */
     public function renderView($view, array $parameters = array())
     {
-        return $this->container->get('twig')->render($view, $parameters);
+        try {
+            return $this->container->get('twig')->render($view, $parameters);
+        } catch (Exception $e) {
+            $this->container->get(LoggerService::class)->critical("Cant render view {$view}", ['view' => $view, 'params' => $parameters]);
+            return null;
+        }
     }
 
     /**
