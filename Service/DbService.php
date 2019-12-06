@@ -56,7 +56,7 @@ final class DbService
     /**
      * @return EntityManager|object
      */
-    protected function getEm()
+    public function getEm()
     {
         if (!$this->em) {
             $this->em = $this->manager->getManager();
