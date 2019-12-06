@@ -3,12 +3,12 @@
 namespace Meniam\Bundle\CoreBundle\Service;
 
 use Exception;
+use Meniam\Bundle\CoreBundle\Traits\DbTrait;
 use Meniam\Bundle\CoreBundle\Traits\ServiceSystemTrait;
 use Meniam\Bundle\CoreBundle\Filter\FilterStatic;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearch;
 use Meniam\Bundle\CoreBundle\Filter\Rule\SuggestionSearchId;
 use Meniam\Bundle\CoreBundle\Traits\CacheTrait;
-use Meniam\Bundle\CoreBundle\Traits\ConnectionTrait;
 use Meniam\Bundle\CoreBundle\Traits\PagerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +31,7 @@ abstract class AbstractCoreService implements ServiceSubscriberInterface
 {
     use CacheTrait;
     use ServiceSystemTrait;
-    use ConnectionTrait;
+    use DbTrait;
     use PagerTrait;
 
     protected $container;
