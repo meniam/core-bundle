@@ -1,6 +1,6 @@
 <?php
 
-namespace Meniam\Bundle\CoreBundle\Traits;
+namespace Meniam\Bundle\CoreBundle\Service;
 
 use InvalidArgumentException;
 use \PDO;
