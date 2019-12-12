@@ -42,11 +42,11 @@ trait ConnectionTrait
      */
     public function getConnectionLogger()
     {
-        if ($this->loggerTraitLogger) {
-            return $this->loggerTraitLogger;
+        if ($this->connectionTraitLogger) {
+            return $this->connectionTraitLogger;
         }
 
-        return $this->loggerTraitLogger;
+        return $this->connectionTraitLogger;
     }
 
     /**
