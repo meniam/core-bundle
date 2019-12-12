@@ -15,7 +15,7 @@ trait LoggerTrait
     /**
      * @var LoggerService
      */
-    private $loggerTraitLogger;
+    protected $loggerTraitLogger;
 
     /**
      * @return LoggerInterface
